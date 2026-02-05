@@ -1,0 +1,13 @@
+{{ $p := . }}
+{{ with $p.problems }}
+<section class="case-section">
+  <h2>Проблемы</h2>
+  {{ if reflect.IsSlice . }}
+  <ul>
+    {{ range . }}{{ if . }}<li>{{ . }}</li>{{ end }}{{ end }}
+  </ul>
+  {{ else }}
+  <p>{{ . }}</p>
+  {{ end }}
+</section>
+{{ end }}

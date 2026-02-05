@@ -1,0 +1,15 @@
+{{ define "main" }}
+  {{ $page := . }}
+  {{ $p := .Params }}
+  <article class="case">
+    {{ partial "case/cover.html" $page }}
+    {{ partial "case/company.html" $p }}
+    {{ partial "case/audience.html" $p }}
+    {{ partial "case/problems.html" $p }}
+    {{ partial "case/role.html" $p }}
+    {{ partial "case/process.html" $page }}
+    {{ partial "case/research.html" (dict "page" $page "p" $p) }}
+    {{ partial "case/layout-blocks.html" $page }}
+    {{ partial "case/results.html" $p }}
+  </article>
+{{ end }}

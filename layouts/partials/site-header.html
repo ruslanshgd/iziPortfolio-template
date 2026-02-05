@@ -1,0 +1,9 @@
+<a href="{{ "/" | relURL }}" class="site-header__name">{{ site.Params.author_name | default site.Title }}</a>
+<nav class="site-header__nav">
+  {{ with site.Params.author_email }}<a href="mailto:{{ . }}">Почта</a>{{ end }}
+  {{ with site.Params.author_telegram }}<a href="{{ . }}" target="_blank" rel="noopener">Telegram</a>{{ end }}
+  {{ with site.Params.author_linkedin }}<a href="{{ . }}" target="_blank" rel="noopener">LinkedIn</a>{{ end }}
+  {{ with site.Params.author_behance }}<a href="{{ . }}" target="_blank" rel="noopener">Behance</a>{{ end }}
+  {{ with site.Params.author_dribbble }}<a href="{{ . }}" target="_blank" rel="noopener">Dribbble</a>{{ end }}
+  {{ with site.Params.author_cv }}<a href="{{ . }}" target="_blank" rel="noopener">CV</a>{{ end }}
+</nav>

@@ -1,0 +1,8 @@
+{{ $p := . }}
+{{ if or $p.role $p.team }}
+<section class="case-section">
+  <h2>Роль и команда</h2>
+  {{ with $p.role }}<p>{{ . }}</p>{{ end }}
+  {{ with $p.team }}<p><strong>Команда:</strong> {{ . }}</p>{{ end }}
+</section>
+{{ end }}

@@ -1,0 +1,15 @@
+{{ $p := . }}
+{{ with $p.results }}
+<section class="case-section results-block">
+  <h2>Результаты кейса</h2>
+  <p>{{ . }}</p>
+</section>
+{{ end }}
+{{ with $p.results_list }}
+<section class="case-section results-block">
+  <h2>Результаты кейса</h2>
+  <ul>
+    {{ range . }}{{ if . }}<li>{{ . }}</li>{{ end }}{{ end }}
+  </ul>
+</section>
+{{ end }}

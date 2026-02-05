@@ -1,0 +1,35 @@
+{{ $page := .page }}
+{{ $p := .p }}
+{{ if or $p.research_context $p.research_artifact $p.research_blocks $p.insights }}
+<section class="case-section">
+  <h2>Исследование и контекст</h2>
+  {{ with $p.research_context }}<p>{{ . }}</p>{{ end }}
+  {{ with $p.research_artifact }}<p>{{ . }}</p>{{ end }}
+  {{ with $p.research_blocks }}
+    {{ range . }}
+    <div class="block-text-image">
+      <div>
+        {{ with .title }}<h3>{{ . }}</h3>{{ end }}
+        {{ with .text }}<p>{{ . }}</p>{{ end }}
+      </div>
+      {{ with .image }}
+      <div class="block-text-image__media">
+        {{ $imgRes := partial "get-image-resource.html" (dict "page" $page "path" . "context" "research") }}
+        {{ if $imgRes }}
+          <img src="{{ $imgRes.RelPermalink }}" alt="">
+        {{ else }}
+          <img src="{{ . | relURL }}" alt="">
+        {{ end }}
+      </div>
+      {{ end }}
+    </div>
+    {{ end }}
+  {{ end }}
+  {{ with $p.insights }}
+  <h3>Выводы и инсайты</h3>
+  <ul>
+    {{ range . }}{{ if . }}<li>{{ . }}</li>{{ end }}{{ end }}
+  </ul>
+  {{ end }}
+</section>
+{{ end }}

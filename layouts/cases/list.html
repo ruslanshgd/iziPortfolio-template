@@ -1,0 +1,5 @@
+{{ define "main" }}
+  <meta http-equiv="refresh" content="0; url={{ "/" | relURL }}">
+  <script>window.location.replace("{{ "/" | relURL }}");</script>
+  <p><a href="{{ "/" | relURL }}">Перейти на главную</a>.</p>
+{{ end }}

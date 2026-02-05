@@ -1,0 +1,52 @@
+{{ with site.Params.education }}
+  {{ $hasCourses := gt (len .courses) 0 }}
+  {{ $hasUniversities := gt (len .universities) 0 }}
+  {{ if or $hasCourses $hasUniversities }}
+<div class="education-wrap">
+  <section class="education portfolio-content" aria-labelledby="education-heading">
+    <h2 class="education__title" id="education-heading">Образование</h2>
+
+    {{ if $hasCourses }}
+    <div class="education__block education__block--courses">
+      <h3 class="education__subtitle">Курсы</h3>
+      <ul class="education-list education-list--courses">
+        {{ range .courses }}
+        <li class="education-list__item">
+          <p>
+            {{ if .url }}
+              <a href="{{ .url }}" class="education-list__link" target="_blank" rel="noopener noreferrer">{{ .title }}</a>
+            {{ else }}
+              {{ .title }}
+            {{ end }}
+            {{ with .provider }} {{ . }}{{ end }}
+            {{ if or .year .status }} &ndash; {{ if .status }}{{ .status }}{{ else }}{{ .year }} год{{ end }}{{ end }}
+            {{ with .certificate }} &mdash; <a href="{{ . }}" class="education-list__certificate" target="_blank" rel="noopener noreferrer">сертификат</a>{{ end }}
+          </p>
+        </li>
+        {{ end }}
+      </ul>
+    </div>
+    {{ end }}
+
+    {{ if $hasUniversities }}
+    <div class="education__block education__block--universities">
+      <h3 class="education__subtitle">Университет</h3>
+      <ul class="education-list education-list--universities">
+        {{ range .universities }}
+        <li class="education-list__item">
+          <p>
+            <em>{{ .name }} {{ .year }} год</em>
+          </p>
+          <p>
+            {{ .speciality }}{{ with .degree }}, {{ . }}{{ end }}{{ with .note }} &ndash; {{ . }}{{ end }}
+          </p>
+        </li>
+        {{ end }}
+      </ul>
+    </div>
+    {{ end }}
+  </section>
+</div>
+  {{ end }}
+{{ end }}
+

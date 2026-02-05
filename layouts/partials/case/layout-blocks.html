@@ -1,0 +1,39 @@
+{{ $page := . }}
+{{ $p := $page.Params }}
+{{ with $p.layout_blocks }}
+<section class="case-section">
+  <h2>Макеты</h2>
+  {{ range . }}
+  <div class="layout-block">
+    {{ with .title }}<h3 class="layout-block__title">{{ . }}</h3>{{ end }}
+    {{ with .subtitle }}<p class="layout-block__subtitle">{{ . }}</p>{{ end }}
+    {{ with .text }}<p>{{ . }}</p>{{ end }}
+    {{ with .images }}
+    <div class="layout-block__images">
+      {{ range . }}
+        {{ $imgRes := partial "get-image-resource.html" (dict "page" $page "path" . "context" "layout") }}
+        {{ if $imgRes }}
+          <img src="{{ $imgRes.RelPermalink }}" alt="">
+        {{ else }}
+          <img src="{{ . | relURL }}" alt="">
+        {{ end }}
+      {{ end }}
+    </div>
+    {{ end }}
+  </div>
+  {{ end }}
+  {{ with $p.before_after }}
+  <div class="before-after">
+    <div>
+      <strong>Было</strong>
+      <p>{{ .before }}</p>
+    </div>
+    <div>
+      <strong>Стало</strong>
+      <p>{{ .after }}</p>
+      {{ with .metric }}<p class="before-after__metric">{{ . }}</p>{{ end }}
+    </div>
+  </div>
+  {{ end }}
+</section>
+{{ end }}

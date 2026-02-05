@@ -1,0 +1,7 @@
+{{ $p := . }}
+{{ with $p.audience }}
+<section class="case-section">
+  <h2>Целевая аудитория</h2>
+  <p>{{ . }}</p>
+</section>
+{{ end }}

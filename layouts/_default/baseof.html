@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="{{ site.Language.Lang }}">
+  <head>
+    {{ partial "head.html" . }}
+  </head>
+  <body>
+    <div class="portfolio-container">
+      <header class="site-header portfolio-content">
+        {{ partial "site-header.html" . }}
+      </header>
+      <main class="portfolio-content">
+        {{ block "main" . }}{{ end }}
+      </main>
+      <footer class="site-footer portfolio-content">
+        {{ partial "site-header.html" . }}
+      </footer>
+    </div>
+  </body>
+</html>

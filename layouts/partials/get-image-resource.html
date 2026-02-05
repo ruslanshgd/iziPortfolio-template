@@ -1,0 +1,73 @@
+{{/* 
+  Helper для поиска изображения с поддержкой форматов: jpeg, jpg, png, webp
+  Использование: {{ partial "get-image-resource.html" (dict "page" $page "path" "img/card/card" "context" "card") }}
+  Если path не содержит "/", автоматически ищет в стандартных папках img/ по context
+  Возвращает ресурс или false
+*/}}
+{{ $page := .page }}
+{{ $path := .path }}
+{{ $context := .context | default "" }}
+{{ $found := false }}
+
+{{ if $path }}
+  {{/* Если путь не содержит "/", определяем стандартные папки по context */}}
+  {{ $searchPaths := slice $path }}
+  {{ if not (strings.Contains $path "/") }}
+    {{ $folders := slice }}
+    {{ if eq $context "card" }}
+      {{ $folders = slice "img/card" }}
+    {{ else if eq $context "cover" }}
+      {{ $folders = slice "img/cover" }}
+    {{ else if eq $context "process" }}
+      {{ $folders = slice "img/process" }}
+    {{ else if eq $context "research" }}
+      {{ $folders = slice "img/research" }}
+    {{ else if eq $context "layout" }}
+      {{ $folders = slice "img/layouts" }}
+    {{ else }}
+      {{/* Если context не указан, пробуем все стандартные папки */}}
+      {{ $folders = slice "img/card" "img/cover" "img/process" "img/research" "img/layouts" }}
+    {{ end }}
+    {{ range $folders }}
+      {{ $searchPaths = $searchPaths | append (printf "%s/%s" . $path) }}
+    {{ end }}
+  {{ end }}
+  
+  {{/* Пробуем найти файл по каждому пути */}}
+  {{ range $searchPaths }}
+    {{ if not $found }}
+      {{ $tryPath := . }}
+      {{/* Определяем базовый путь и расширение */}}
+      {{ $basePath := $tryPath }}
+      {{ $parts := split $tryPath "." }}
+      {{ if gt (len $parts) 1 }}
+        {{ $lastPart := index (last 1 $parts) 0 }}
+        {{ if in (slice "jpg" "jpeg" "png" "webp") $lastPart }}
+          {{/* Сначала пробуем путь как есть (с расширением) */}}
+          {{ with $page.Resources.Get $tryPath }}
+            {{ $found = . }}
+          {{ end }}
+          {{/* Если не нашли, убираем расширение для поиска других форматов */}}
+          {{ if not $found }}
+            {{ $basePath = strings.TrimSuffix (printf ".%s" $lastPart) $tryPath }}
+          {{ end }}
+        {{ end }}
+      {{ end }}
+      
+      {{/* Если не нашли, пробуем разные расширения */}}
+      {{ if not $found }}
+        {{ $formats := slice "webp" "png" "jpg" "jpeg" }}
+        {{ range $formats }}
+          {{ if not $found }}
+            {{ $tryPathWithExt := printf "%s.%s" $basePath . }}
+            {{ with $page.Resources.Get $tryPathWithExt }}
+              {{ $found = . }}
+            {{ end }}
+          {{ end }}
+        {{ end }}
+      {{ end }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+
+{{ return $found }}

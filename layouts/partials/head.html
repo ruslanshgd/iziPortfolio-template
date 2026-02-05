@@ -1,0 +1,4 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ if .IsHome }}{{ site.Params.author_name }}{{ with site.Params.author_surname }} {{ . }}{{ end }}{{ with site.Params.author_grade }} – {{ . }}{{ end }}{{ else }}{{ .Title }} | {{ site.Params.author_name }}{{ with site.Params.author_surname }} {{ . }}{{ end }}{{ with site.Params.author_grade }} – {{ . }}{{ end }}{{ end }}</title>
+<link rel="stylesheet" href="{{ "css/main.css" | relURL }}">

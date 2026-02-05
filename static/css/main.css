@@ -1,0 +1,783 @@
+/* Portfolio grid: container 1360px, content 1140px (per .cursor/templates/portfolio-case-structure.mdc) */
+:root {
+  --container-max: 1360px;
+  --content-max: 1140px;
+  --gap: 24px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #1a1a1a;
+}
+
+/* Outer container: max 1360px, centered */
+.portfolio-container {
+  max-width: var(--container-max);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--gap);
+  padding-right: var(--gap);
+}
+
+/* Content grid: 1140px content width inside container */
+.portfolio-content {
+  max-width: var(--content-max);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Section spacing */
+.case-section {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.case-section:first-of-type {
+  padding-top: 0;
+}
+
+/* Typography */
+.case-section h2 {
+  font-size: 1.5rem;
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.case-section h3 {
+  font-size: 1.25rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.case-section p,
+.case-section ul {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.case-section ul {
+  padding-left: 1.5rem;
+}
+
+/* Cover block */
+.case-cover {
+  min-height: 40vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 3rem 1rem;
+}
+
+.case-cover--image {
+  position: relative;
+  background-size: cover;
+  background-position: center;
+}
+
+.case-cover--image .case-cover__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.6) 100%);
+}
+
+.case-cover--image .case-cover__inner {
+  position: relative;
+  z-index: 1;
+  color: #fff;
+}
+
+.case-cover__icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 1rem;
+  object-fit: contain;
+}
+
+.case-cover__title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem;
+}
+
+.case-cover__subtitle {
+  font-size: 1rem;
+  opacity: 0.9;
+  margin: 0;
+}
+
+.case-cover__meta {
+  font-size: 0.875rem;
+  opacity: 0.8;
+  margin-bottom: 0.5rem;
+}
+
+/* Text + image pattern */
+.block-text-image {
+  display: grid;
+  gap: var(--gap);
+  margin-bottom: 2rem;
+}
+
+@media (min-width: 768px) {
+  .block-text-image {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+}
+
+.block-text-image__media img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Layout block (heading + text + image) */
+.layout-block {
+  margin-bottom: 3rem;
+}
+
+.layout-block__title {
+  font-size: 1.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.layout-block__subtitle {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 1rem;
+}
+
+.layout-block__images {
+  display: grid;
+  gap: var(--gap);
+  margin-top: 1rem;
+}
+
+.layout-block__images img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Before/after */
+.before-after {
+  display: grid;
+  gap: var(--gap);
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background: #f5f5f5;
+  border-radius: 8px;
+}
+
+@media (min-width: 768px) {
+  .before-after {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.before-after__metric {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #0a0;
+}
+
+/* Results */
+.results-block {
+  padding: 2rem 0;
+  border-top: 1px solid #eee;
+}
+
+/* --- Site header (name left, links right) --- */
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.site-header__name {
+  font-weight: 600;
+  font-size: 1.125rem;
+  color: inherit;
+  text-decoration: none;
+}
+
+.site-header__name:hover {
+  text-decoration: underline;
+}
+
+.site-header__nav {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.site-header__nav a {
+  color: #333;
+  text-decoration: none;
+  font-size: 0.9375rem;
+}
+
+.site-header__nav a:hover {
+  text-decoration: underline;
+}
+
+.site-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  margin-top: 2rem;
+  border-top: 1px solid #eee;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.site-footer .site-header__name {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.site-footer .site-header__nav a {
+  font-size: 0.9375rem;
+}
+
+/* --- Home: hero (тёмный фон, заголовок слева, круглое фото с золотой обводкой) --- */
+.home-hero-wrap {
+  /* Белый фон по умолчанию */
+}
+
+.home-hero {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+.home-hero__content {
+  min-width: 0;
+}
+
+.home-hero__title {
+  font-size: clamp(1.75rem, 5vw, 3rem);
+  font-weight: 700;
+  line-height: 1.15;
+  margin: 0 0 1.25rem;
+  color: #1a1a1a;
+}
+
+
+.home-hero__location {
+  color: #1a1a1a;
+  font-weight: 500;
+}
+
+.home-hero__intro-text {
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  color: #333;
+  margin: 0;
+  max-width: 720px;
+}
+
+.home-hero__intro-text p {
+  margin: 0 0 0.5em;
+}
+
+.home-hero__intro-text p:last-child {
+  margin-bottom: 0;
+}
+
+.home-hero__intro-image {
+  flex-shrink: 0;
+}
+
+.home-hero__intro-image img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 8px;
+  display: block;
+}
+
+/* --- Career (Карьера): белый фон, двухколоночная верстка --- */
+.career-wrap {
+  /* Белый фон по умолчанию */
+}
+
+.career {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+.career__title {
+  font-size: clamp(1.5rem, 4vw, 2.25rem);
+  font-weight: 700;
+  margin: 0 0 2rem;
+  color: #1a1a1a;
+}
+
+.career-item {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  border-top: 1px solid #eee;
+}
+
+.career-item:first-of-type {
+  padding-top: 0;
+  border-top: none;
+}
+
+@media (min-width: 768px) {
+  .career-item {
+    grid-template-columns: minmax(0, 0.4fr) 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+}
+
+.career-item__left {
+  min-width: 0;
+}
+
+.career-item__logo {
+  margin-bottom: 0.75rem;
+}
+
+.career-item__logo img {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  display: block;
+}
+
+.career-item__company {
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin: 0 0 0.25rem;
+  color: #1a1a1a;
+}
+
+.career-item__position {
+  font-size: 1rem;
+  margin: 0 0 0.25rem;
+  color: #333;
+}
+
+.career-item__dates {
+  font-size: 0.9375rem;
+  margin: 0;
+  color: #666;
+}
+
+.career-item__right {
+  min-width: 0;
+}
+
+.career-item__content.prose {
+  font-size: 1rem;
+  line-height: 1.65;
+  color: #333;
+}
+
+.career-item__content.prose p {
+  margin: 0 0 0.75em;
+}
+
+.career-item__content.prose p:first-child {
+  font-weight: 500;
+}
+
+.career-item__content.prose p:last-child {
+  margin-bottom: 0;
+}
+
+.career-item__content.prose ul {
+  margin: 0.5em 0 0;
+  padding-left: 1.25rem;
+  list-style: disc;
+}
+
+.career-item__content.prose li {
+  margin-bottom: 0.35em;
+}
+
+.career-item__content.prose li:last-child {
+  margin-bottom: 0;
+}
+
+/* --- Education (Образование): блок под карьерой --- */
+.education-wrap {
+  /* Белый фон по умолчанию, как у .career-wrap */
+}
+
+.education {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+.education__title {
+  font-size: clamp(1.5rem, 4vw, 2.25rem);
+  font-weight: 700;
+  margin: 0 0 2rem;
+  color: #1a1a1a;
+}
+
+.education__subtitle {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 0 0 1rem;
+  color: #333;
+}
+
+.education-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.education-list__item {
+  margin-bottom: 1rem;
+}
+
+.education-list__item p {
+  margin: 0 0 0.25rem;
+}
+
+.education-list__item p:last-child {
+  margin-bottom: 0;
+}
+
+.education-list__link {
+  color: #0055cc;
+  text-decoration: none;
+}
+
+.education-list__link:hover,
+.education-list__link:focus-visible {
+  text-decoration: underline;
+}
+
+.education-list__certificate {
+  color: #0055cc;
+  text-decoration: none;
+}
+
+.education-list__certificate:hover,
+.education-list__certificate:focus-visible {
+  text-decoration: underline;
+}
+
+/* --- Home: case cards (обложки кейсов) --- */
+.home-cases {
+  padding-top: 1rem;
+  padding-bottom: 4rem;
+}
+
+.case-cards {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: var(--gap);
+  grid-template-columns: 1fr;
+}
+
+.case-card {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  transition: box-shadow 0.2s;
+  height: 500px;
+}
+
+.case-card:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.case-card__link {
+  display: flex;
+  gap: 2rem;
+  color: inherit;
+  text-decoration: none;
+  padding: 48px 0 56px 64px;
+  position: relative;
+  height: 100%;
+}
+
+/* Mobile platform: отступ справа 32px */
+.case-card--mobile .case-card__link {
+  padding-right: 32px;
+}
+
+/* Web platform: отступ справа 0 */
+.case-card--web .case-card__link {
+  padding-right: 0;
+}
+
+.case-card__body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.case-card__image-wrap {
+  position: relative;
+  flex-shrink: 0;
+  overflow: hidden;
+  width: 400px;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Layout: center - изображение по центру справа */
+.case-card--layout-center .case-card__link {
+  align-items: center;
+}
+
+.case-card--layout-center .case-card__image-wrap {
+  align-self: center;
+}
+
+/* Layout: pinned - изображение в правом нижнем углу */
+.case-card--layout-pinned .case-card__link {
+  align-items: center;
+}
+
+.case-card--layout-pinned .case-card__image-wrap {
+  position: absolute;
+  top: 48px;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  width: 400px;
+  height: auto;
+  max-height: calc(100% - 48px);
+}
+
+.case-card--layout-pinned.case-card--mobile .case-card__image-wrap {
+  right: 32px;
+}
+
+/* Для layout pinned: изображение выравнивается по низу справа */
+.case-card--layout-pinned .case-card__image {
+  object-fit: contain;
+  object-position: bottom right;
+}
+
+/* Для мобильных pinned: центрирование, максимальное масштабирование, выравнивание по верху (низ обрезается) */
+.case-card--layout-pinned.case-card--mobile .case-card__image {
+  object-fit: cover;
+  object-position: top center;
+}
+
+/* Для layout pinned: добавляем отступ справа для body, чтобы текст не заходил на изображение */
+.case-card--layout-pinned .case-card__body {
+  padding-right: 450px; /* 400px изображение + 50px зазор */
+}
+
+.case-card--layout-pinned.case-card--mobile .case-card__body {
+  padding-right: 432px; /* 400px изображение + 32px отступ справа */
+}
+
+/* Layout: bottom - изображение прибито к низу справа */
+.case-card--layout-bottom .case-card__link {
+  align-items: center;
+}
+
+.case-card--layout-bottom .case-card__image-wrap {
+  position: absolute;
+  top: 48px;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  align-items: flex-end;
+  width: 400px;
+  height: auto;
+  max-height: calc(100% - 48px);
+}
+
+.case-card--layout-bottom.case-card--mobile .case-card__image-wrap {
+  right: 32px;
+}
+
+/* Для layout bottom: изображение выравнивается по низу, верхняя часть может обрезаться */
+.case-card--layout-bottom .case-card__image {
+  object-fit: cover;
+  object-position: bottom;
+  width: 100%;
+  height: 100%;
+}
+
+.case-card--layout-bottom .case-card__image[data-mobile="true"] {
+  object-position: bottom;
+}
+
+/* Для layout bottom: добавляем отступ справа для body, чтобы текст не заходил на изображение */
+.case-card--layout-bottom .case-card__body {
+  padding-right: 450px; /* 400px изображение + 50px зазор */
+}
+
+.case-card--layout-bottom.case-card--mobile .case-card__body {
+  padding-right: 432px; /* 400px изображение + 32px отступ справа */
+}
+
+.case-card__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+
+/* Для мобильных изображений - выравнивание строго по верху */
+.case-card__image[data-mobile="true"] {
+  object-position: top;
+}
+
+/* Для layout center - центрирование */
+.case-card--layout-center .case-card__image {
+  object-position: center;
+}
+
+.case-card--layout-center .case-card__image[data-mobile="true"] {
+  object-position: top;
+}
+
+.case-card__image--placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #e8e8e8 0%, #f5f5f5 100%);
+}
+
+@media (max-width: 1024px) {
+  .case-card {
+    height: 500px;
+  }
+  
+  .case-card__link {
+    flex-direction: column;
+    padding: 32px 24px 40px 24px;
+    height: 100%;
+  }
+  
+  .case-card--mobile .case-card__link {
+    padding-right: 24px;
+  }
+  
+  .case-card__body {
+    padding-right: 0 !important;
+  }
+  
+  .case-card__image-wrap {
+    position: relative !important;
+    margin-top: 1.5rem;
+    width: 100%;
+    height: 400px;
+    bottom: auto !important;
+    right: auto !important;
+    top: auto !important;
+  }
+  
+  .case-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: top;
+  }
+  
+  .case-card__image--placeholder {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.case-card__company {
+  font-size: 32px;
+  font-weight: 700;
+  margin: 0 0 0.5rem;
+  line-height: 1.2;
+}
+
+.case-card__title {
+  font-size: clamp(28px, 5vw, 68px);
+  font-weight: 700;
+  margin: 0 0 0.5rem;
+  line-height: 1.1;
+}
+
+.case-card__desc {
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: #555;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .case-card__company { font-size: 24px; }
+  .case-card__title { font-size: 28px; }
+  .case-card__desc { font-size: 18px; }
+}
+
+/* List / cards (legacy: list page) */
+.cases-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: var(--gap);
+}
+
+.cases-list__item {
+  border: 1px solid #eee;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.cases-list__link {
+  display: block;
+  padding: 1.5rem;
+  color: inherit;
+  text-decoration: none;
+}
+
+.cases-list__link:hover {
+  background: #f9f9f9;
+}
+
+.cases-list__title {
+  margin: 0 0 0.25rem;
+  font-size: 1.25rem;
+}
+
+.cases-list__desc {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #555;
+}

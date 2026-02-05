@@ -1,0 +1,25 @@
+---
+alwaysApply: true
+scope: reasoning
+priority: critical
+---
+
+# React Code Audit Mode
+
+When reviewing React / JSX / TSX code:
+
+You MUST:
+1. Treat `.cursor/data/react.csv` as the ONLY source of audit rules.
+2. Perform code review by matching code against rows in `.cursor/data/react.csv`.
+3. For every issue reported:
+   - Reference Rule No
+   - Include Category and Severity
+4. Do NOT invent issues that are not present in `.cursor/data/react.csv`.
+5. If code is acceptable but risky, mark it as "Risk" with Severity.
+6. If no rules apply, explicitly say:
+   "No violations found according to .cursor/data/react.csv."
+
+Forbidden:
+- Generic advice without Rule No
+- Subjective opinions
+- "Best practices" not backed by .cursor/data/react.csv

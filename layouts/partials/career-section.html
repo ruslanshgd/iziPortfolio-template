@@ -1,0 +1,63 @@
+{{/* 
+  Career section.
+
+  Supports two data sources:
+  1) params.career.items – заполняется Telegram‑ботом через hugo.toml
+  2) Документы из раздела /content/career – как раньше
+*/}}
+{{ $careerSection := .Site.GetPage "section" "career" }}
+{{ $entries := cond (ne $careerSection nil) $careerSection.RegularPages.ByWeight slice }}
+{{ $careerParams := site.Params.career }}
+{{ $careerItems := cond (and (ne $careerParams nil) (isset $careerParams "items")) $careerParams.items slice }}
+
+{{ if or (gt (len $entries) 0) (gt (len $careerItems) 0) }}
+<div class="career-wrap">
+  <section class="career portfolio-content" aria-labelledby="career-heading">
+    <h2 class="career__title" id="career-heading">Карьера</h2>
+
+    {{/* 1. Render items from params.career.items, если они есть */}}
+    {{ if gt (len $careerItems) 0 }}
+      {{ range $careerItems }}
+      <article class="career-item">
+        <div class="career-item__left">
+          <p class="career-item__company">{{ .company }}</p>
+          {{ with .role }}<p class="career-item__position">{{ . }}</p>{{ end }}
+          <p class="career-item__dates">
+            {{- with .start }}{{ . }}{{ end -}}
+            {{- if or .start .end }} &mdash; {{ end -}}
+            {{- with .end }}{{ . }}{{ end -}}
+          </p>
+          {{ with .location }}<p class="career-item__location">{{ . }}</p>{{ end }}
+        </div>
+        <div class="career-item__right">
+          <div class="career-item__content prose">
+            {{ .description | markdownify }}
+          </div>
+        </div>
+      </article>
+      {{ end }}
+    {{ else if gt (len $entries) 0 }}
+    {{/* 2. Fallback to legacy /content/career entries */}}
+      {{ range $entries }}
+      <article class="career-item">
+        <div class="career-item__left">
+          {{ with .Params.logo }}
+          <div class="career-item__logo">
+            <img src="{{ . | relURL }}" alt="" width="48" height="48">
+          </div>
+          {{ end }}
+          <p class="career-item__company">{{ .Title }}</p>
+          {{ with .Params.position }}<p class="career-item__position">{{ . }}</p>{{ end }}
+          {{ with .Params.dates }}<p class="career-item__dates">{{ . }}</p>{{ end }}
+        </div>
+        <div class="career-item__right">
+          <div class="career-item__content prose">
+            {{ .Content }}
+          </div>
+        </div>
+      </article>
+      {{ end }}
+    {{ end }}
+  </section>
+</div>
+{{ end }}

@@ -1,0 +1,60 @@
+{{ define "main" }}
+  {{ $casesSection := .Site.GetPage "section" "cases" }}
+  {{ $cases := where $casesSection.RegularPages "Params.type" "case" }}
+  <div class="home">
+    <div class="home-hero-wrap">
+    <section class="home-hero portfolio-content">
+      {{ with site.Params.author_image }}
+      <div class="home-hero__intro-image">
+        <img src="{{ . | relURL }}" alt="{{ site.Params.author_name | default "Автор" }}">
+      </div>
+      {{ end }}
+      <div class="home-hero__content">
+        <h1 class="home-hero__title">
+          Привет, я {{ site.Params.author_name | default "Имя" }}, {{ site.Params.author_grade | default "продуктовый дизайнер" }} <span class="home-hero__location">📍 {{ site.Params.author_city | default "Город" }}</span>
+        </h1>
+        {{ with site.Params.author_intro }}
+        <div class="home-hero__intro-text">
+          {{ . | safeHTML }}
+        </div>
+        {{ end }}
+      </div>
+    </section>
+    </div>
+
+    <section class="home-cases portfolio-content">
+      <ul class="case-cards">
+        {{ range where $cases "Params.type" "case" }}
+        {{ $page := . }}
+        {{ $img := false }}
+        {{ with $page.Params.card_image }}{{ $img = partial "get-image-resource.html" (dict "page" $page "path" . "context" "card") }}{{ end }}
+        {{ if not $img }}{{ with $page.Params.cover_image }}{{ $img = partial "get-image-resource.html" (dict "page" $page "path" . "context" "cover") }}{{ end }}{{ end }}
+        {{ if not $img }}{{ with $page.Params.cover_icon }}{{ $img = partial "get-image-resource.html" (dict "page" $page "path" . "context" "cover") }}{{ end }}{{ end }}
+        {{ $platform := $page.Params.platform | default "web" }}
+        {{ $layout := $page.Params.layout | default "center" }}
+        {{ $imgWidth := 0 }}
+        {{ if $img }}{{ $imgWidth = $img.Width }}{{ end }}
+        <li class="case-card case-card--{{ $platform }} case-card--layout-{{ $layout }}"{{ if and $img (le $imgWidth 768) }} data-image-width="{{ $imgWidth }}"{{ end }}>
+          <a class="case-card__link" href="{{ $page.RelPermalink }}">
+            <div class="case-card__body">
+              {{ with $page.Params.company_name }}<p class="case-card__company">{{ . }}</p>{{ end }}
+              <h2 class="case-card__title">{{ $page.Title }}</h2>
+              {{ with $page.Params.cover_subtitle }}<p class="case-card__desc">{{ . }}</p>{{ end }}
+            </div>
+            <div class="case-card__image-wrap">
+              {{ if $img }}
+                <img class="case-card__image" src="{{ $img.RelPermalink }}" alt=""{{ if le $imgWidth 768 }} data-mobile="true"{{ end }}>
+              {{ else }}
+                <div class="case-card__image case-card__image--placeholder" aria-hidden="true"></div>
+              {{ end }}
+            </div>
+          </a>
+        </li>
+        {{ end }}
+      </ul>
+    </section>
+
+    {{ partial "career-section.html" . }}
+    {{ partial "education-section.html" . }}
+  </div>
+{{ end }}

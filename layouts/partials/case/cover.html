@@ -1,0 +1,32 @@
+{{ $page := . }}
+{{ $p := $page.Params }}
+{{ $coverImg := "" }}
+{{ if and $p.cover_image (eq ($p.cover_variant | default "icon") "image") }}
+  {{ $imgRes := partial "get-image-resource.html" (dict "page" $page "path" $p.cover_image "context" "cover") }}
+  {{ if $imgRes }}
+    {{ $coverImg = $imgRes.RelPermalink }}
+  {{ else }}
+    {{ $coverImg = $p.cover_image | relURL }}
+  {{ end }}
+{{ end }}
+<section class="case-cover {{ if eq ($p.cover_variant | default "icon") "image" }}case-cover--image{{ end }}"
+  {{ if $coverImg }} style="background-image: url('{{ $coverImg }}');"{{ end }}>
+  {{ if eq ($p.cover_variant | default "icon") "image" }}
+  <div class="case-cover__overlay"></div>
+  {{ end }}
+  <div class="case-cover__inner">
+    {{ if eq ($p.cover_variant | default "icon") "icon" }}
+      {{ with $p.cover_icon }}
+        {{ $imgRes := partial "get-image-resource.html" (dict "page" $page "path" . "context" "cover") }}
+        {{ if $imgRes }}
+          <img class="case-cover__icon" src="{{ $imgRes.RelPermalink }}" alt="">
+        {{ else }}
+          <img class="case-cover__icon" src="{{ . | relURL }}" alt="">
+        {{ end }}
+      {{ end }}
+    {{ end }}
+    {{ with $p.cover_meta }}<p class="case-cover__meta">{{ . }}</p>{{ end }}
+    <h1 class="case-cover__title">{{ $p.cover_title | default $page.Title }}</h1>
+    {{ with $p.cover_subtitle }}<p class="case-cover__subtitle">{{ . }}</p>{{ end }}
+  </div>
+</section>
