@@ -268,6 +268,8 @@ jobs:
             --baseURL "${{ steps.pages.outputs.base_url }}/"
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./public
 
   deploy:
     environment:
@@ -361,6 +363,145 @@ def get_file_content(
     raise GitHubError(f"Failed to get file {path}: {resp.status_code} {resp.text}")
 
 
+def trigger_workflow_dispatch(
+    *,
+    token: str,
+    owner: str,
+    repo: str,
+    workflow_id: str = "deploy.yml",
+) -> None:
+    """
+    Trigger a workflow_dispatch event to rerun the GitHub Actions workflow.
+    """
+    session = requests.Session()
+    session.headers.update(_auth_headers(token))
+    
+    # First, get the workflow ID by name
+    workflows_url = f"{GITHUB_API_URL}/repos/{owner}/{repo}/actions/workflows/{workflow_id}"
+    resp = session.get(workflows_url)
+    if resp.status_code != 200:
+        # Workflow not found, try to create it or skip
+        return
+    
+    workflow_data = resp.json()
+    workflow_id_num = workflow_data.get("id")
+    if not workflow_id_num:
+        return
+    
+    # Trigger workflow_dispatch
+    dispatch_url = f"{GITHUB_API_URL}/repos/{owner}/{repo}/actions/workflows/{workflow_id_num}/dispatches"
+    payload = {
+        "ref": "main",
+    }
+    resp = session.post(dispatch_url, json=payload)
+    if resp.status_code not in (204,):
+        # Don't raise error, just log - workflow might not support dispatch
+        pass
+
+
+def ensure_workflow_and_trigger(
+    *,
+    token: str,
+    owner: str,
+    repo: str,
+) -> tuple[bool, list[str]]:
+    """
+    Ensure workflow file exists and trigger it.
+    Returns (workflow_created, warnings)
+    """
+    warnings = []
+    workflow_content = """name: Deploy Hugo site to Pages
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      HUGO_VERSION: 0.128.0
+    steps:
+      - name: Install Hugo CLI
+        run: |
+          wget -O ${{ runner.temp }}/hugo.deb https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb
+          sudo dpkg -i ${{ runner.temp }}/hugo.deb
+      - name: Install Dart Sass
+        run: sudo snap install dart-sass
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+      - name: Setup Pages
+        id: pages
+        uses: actions/configure-pages@v5
+      - name: Build with Hugo
+        env:
+          HUGO_ENVIRONMENT: production
+          HUGO_ENV: production
+        run: |
+          hugo \\
+            --gc \\
+            --minify \\
+            --baseURL "${{ steps.pages.outputs.base_url }}/"
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./public
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+"""
+    
+    workflow_created = False
+    if not check_workflow_exists(token=token, owner=owner, repo=repo):
+        try:
+            workflow_created = ensure_workflow_file(
+                token=token,
+                owner=owner,
+                repo=repo,
+                workflow_content=workflow_content,
+            )
+            if workflow_created:
+                warnings.append("✅ Workflow файл создан автоматически")
+        except Exception as exc:  # noqa: BLE001
+            warnings.append(f"⚠️ Не удалось создать workflow файл: {exc}")
+    
+    # Try to trigger workflow
+    try:
+        trigger_workflow_dispatch(token=token, owner=owner, repo=repo)
+        warnings.append("🔄 GitHub Actions workflow перезапущен")
+    except Exception:  # noqa: BLE001
+        # Workflow will trigger automatically on next push anyway
+        pass
+    
+    return workflow_created, warnings
+
+
 def update_hugo_toml_field(
     *,
     token: str,
@@ -371,6 +512,7 @@ def update_hugo_toml_field(
 ) -> None:
     """
     Update a specific field in hugo.toml.
+    Removes all existing occurrences of the field to avoid duplicates, then adds the new value.
     
     field_path examples:
     - "author_name" -> [params] author_name = "..."
@@ -384,10 +526,6 @@ def update_hugo_toml_field(
         path="hugo.toml",
     ).decode("utf-8")
 
-    # Update the field using regex
-    # Pattern: field_name = "old_value" or field_name = 'old_value'
-    pattern = rf'^(\s*{re.escape(field_path)}\s*=\s*)(["\'])(.*?)\2'
-    
     def _toml_string(v: str) -> str:
         escaped = (
             v.replace("\\", "\\\\")
@@ -398,22 +536,36 @@ def update_hugo_toml_field(
         return f'"{escaped}"'
 
     new_value = _toml_string(value)
-    replacement = rf'\1{new_value}'
     
-    updated_content = re.sub(pattern, replacement, current_content, flags=re.MULTILINE)
+    # First, remove ALL existing occurrences of the field to avoid duplicates
+    # Pattern matches: field_name = "value" or field_name = 'value' or field_name = value (without quotes)
+    # Matches the entire line including leading whitespace and trailing newline
+    remove_pattern = rf'^\s*{re.escape(field_path)}\s*=\s*(?:["\'](?:[^"\']|\\["\'])*["\']|[^"\'\n]+)\s*$\n?'
+    updated_content = re.sub(remove_pattern, "", current_content, flags=re.MULTILINE)
     
-    if updated_content == current_content:
-        # Field not found, try to add it in [params] section
-        params_section_pattern = r'(\[params\]\s*\n)'
-        if re.search(params_section_pattern, updated_content):
-            # Insert after [params]
-            updated_content = re.sub(
-                params_section_pattern,
-                rf'\1  {field_path} = {new_value}\n',
-                updated_content,
-            )
+    # Remove empty lines that might have been left after removing fields
+    # Replace 3+ consecutive newlines with double newline (preserve section spacing)
+    updated_content = re.sub(r'\n{3,}', '\n\n', updated_content)
+    
+    # Now add the field in the [params] section
+    params_section_pattern = r'(\[params\]\s*\n)'
+    if re.search(params_section_pattern, updated_content):
+        # Find the insertion point - after [params] and before next section or end
+        match = re.search(params_section_pattern, updated_content)
+        if match:
+            insert_pos = match.end()
+            # Find the next non-empty line to determine indentation
+            next_lines = updated_content[insert_pos:insert_pos+200]  # Look ahead a bit
+            indent_match = re.search(r'\n(\s+)(?:[a-zA-Z_])', next_lines)
+            indent = indent_match.group(1) if indent_match else "  "
+            
+            # Insert the field with proper indentation
+            field_line = f"{indent}{field_path} = {new_value}\n"
+            updated_content = updated_content[:insert_pos] + field_line + updated_content[insert_pos:]
         else:
-            raise GitHubError(f"Could not find [params] section or field {field_path}")
+            raise GitHubError(f"Could not find insertion point in [params] section")
+    else:
+        raise GitHubError(f"Could not find [params] section in hugo.toml")
 
     # Upload updated file
     upsert_file(

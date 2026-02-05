@@ -281,14 +281,30 @@ async def handle_photo(message: types.Message) -> None:
                 content_bytes=photo_bytes,
                 message="chore: update author photo from Telegram bot",
             )
-            await message.answer("✅ Фото обновлено! GitHub Actions соберет обновленный сайт через несколько минут.")
+            # Ensure workflow exists and trigger it
+            from .github_client import ensure_workflow_and_trigger
+            workflow_created, workflow_warnings = ensure_workflow_and_trigger(
+                token=session.github_token,
+                owner=session.github_username,
+                repo=session.repo_name,
+            )
+            
             session.update_mode = False
             session.update_field = None
             session.step = "github_username"
+            
+            message_text = "✅ Фото обновлено!\n\n"
+            if workflow_warnings:
+                message_text += "\n".join(f"• {w}" for w in workflow_warnings) + "\n\n"
+            message_text += (
+                "⏳ GitHub Actions соберет обновленный сайт через несколько минут.\n"
+                f"Проверить статус: https://github.com/{session.github_username}/{session.repo_name}/actions"
+            )
+            await message.answer(message_text)
         except Exception as exc:  # noqa: BLE001
             logger.exception("Failed to update photo")
             await message.answer(f"❌ Ошибка при обновлении фото: {exc}")
-        return
+            return
 
     if session.step != "author_photo":
         # Ignore unrelated photos.
@@ -434,17 +450,21 @@ async def _finalize_profile_and_deploy(message: types.Message, session: UserSess
         "Готово! 🚀\n\n"
         f"Репозиторий создан: {repo_url}\n\n"
         f"Твоё портфолио будет доступно по ссылке:\n{pages_url}\n\n"
-        "📋 **Важные шаги для публикации сайта:**\n\n"
-        "1. **Проверь GitHub Actions:**\n"
+        "📋 **Обязательные шаги для публикации сайта:**\n\n"
+        "**1. Настрой GitHub Pages:**\n"
+        f"   Открой: {settings_url}\n\n"
+        "   В разделе «Build and deployment»:\n"
+        "   • **Source:** выбери **«GitHub Actions»** (не Jekyll, не Static HTML!)\n"
+        "   • Нажми «Save»\n\n"
+        "   ⚠️ **Важно:** НЕ нажимай «Configure» на карточках "
+        "«GitHub Pages Jekyll» или «Static HTML» — они не подходят для Hugo!\n\n"
+        "**2. Проверь статус деплоя:**\n"
         f"   {actions_url}\n"
-        "   Должен запуститься workflow «Deploy Hugo site to Pages»\n\n"
-        "2. **Настрой GitHub Pages (если сайт не появился через 2–3 минуты):**\n"
-        f"   {settings_url}\n"
-        "   • Source: выбери «GitHub Actions»\n"
-        "   • Сохрани изменения\n\n"
-        "3. **Если workflow файл отсутствует:**\n"
-        "   Убедись, что в шаблоне репозитория есть файл:\n"
-        "   `.github/workflows/deploy.yml`\n\n"
+        "   • Должен запуститься workflow «Deploy Hugo site to Pages»\n"
+        "   • Дождись завершения (зеленый статус = успех)\n"
+        "   • Если ошибка — проверь логи в workflow\n\n"
+        "**3. Подожди 2–3 минуты** после успешного деплоя,\n"
+        "   затем проверь сайт по ссылке выше.\n\n"
     )
     
     if warnings:
@@ -614,6 +634,28 @@ async def dialog_flow(message: types.Message) -> None:
                             value=text,
                         )
                         await message.answer(f"✅ {field_name} обновлен!")
+                    
+                    # Ensure workflow exists and trigger it
+                    from .github_client import ensure_workflow_and_trigger
+                    workflow_created, workflow_warnings = ensure_workflow_and_trigger(
+                        token=session.github_token,
+                        owner=session.github_username,
+                        repo=session.repo_name,
+                    )
+                    
+                    session.update_mode = False
+                    session.update_field = None
+                    session.step = "github_username"
+                    
+                    message_text = "✅ Изменения применены!\n\n"
+                    if workflow_warnings:
+                        message_text += "\n".join(f"• {w}" for w in workflow_warnings) + "\n\n"
+                    message_text += (
+                        "⏳ GitHub Actions соберет обновленный сайт через несколько минут.\n"
+                        f"Проверить статус: https://github.com/{session.github_username}/{session.repo_name}/actions"
+                    )
+                    await message.answer(message_text)
+                    return
                 elif session.step == "update_author_surname":
                     update_hugo_toml_field(
                         token=session.github_token,
@@ -631,10 +673,26 @@ async def dialog_flow(message: types.Message) -> None:
                     )
                     session.profile_data.pop("temp_name", None)
                     await message.answer("✅ Имя и фамилия обновлены!")
+                    # Ensure workflow exists and trigger it
+                    from .github_client import ensure_workflow_and_trigger
+                    workflow_created, workflow_warnings = ensure_workflow_and_trigger(
+                        token=session.github_token,
+                        owner=session.github_username,
+                        repo=session.repo_name,
+                    )
+                    
                     session.update_mode = False
                     session.update_field = None
                     session.step = "github_username"
-                    await message.answer("Изменения применены. GitHub Actions соберет обновленный сайт через несколько минут.")
+                    
+                    message_text = "✅ Изменения применены!\n\n"
+                    if workflow_warnings:
+                        message_text += "\n".join(f"• {w}" for w in workflow_warnings) + "\n\n"
+                    message_text += (
+                        "⏳ GitHub Actions соберет обновленный сайт через несколько минут.\n"
+                        f"Проверить статус: https://github.com/{session.github_username}/{session.repo_name}/actions"
+                    )
+                    await message.answer(message_text)
                     return
                 else:
                     update_hugo_toml_field(
@@ -644,11 +702,27 @@ async def dialog_flow(message: types.Message) -> None:
                         field_path=field_name,
                         value=text,
                     )
-                    await message.answer(f"✅ {field_name} обновлен!")
+                    
+                    # Ensure workflow exists and trigger it
+                    from .github_client import ensure_workflow_and_trigger
+                    workflow_created, workflow_warnings = ensure_workflow_and_trigger(
+                        token=session.github_token,
+                        owner=session.github_username,
+                        repo=session.repo_name,
+                    )
+                    
                     session.update_mode = False
                     session.update_field = None
                     session.step = "github_username"
-                    await message.answer("Изменения применены. GitHub Actions соберет обновленный сайт через несколько минут.")
+                    
+                    message_text = f"✅ {field_name} обновлен!\n\n"
+                    if workflow_warnings:
+                        message_text += "\n".join(f"• {w}" for w in workflow_warnings) + "\n\n"
+                    message_text += (
+                        "⏳ GitHub Actions соберет обновленный сайт через несколько минут.\n"
+                        f"Проверить статус: https://github.com/{session.github_username}/{session.repo_name}/actions"
+                    )
+                    await message.answer(message_text)
             except Exception as exc:  # noqa: BLE001
                 logger.exception("Failed to update field")
                 await message.answer(f"❌ Ошибка при обновлении: {exc}")
