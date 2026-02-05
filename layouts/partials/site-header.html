@@ -1,4 +1,4 @@
-<a href="{{ "/" | relURL }}" class="site-header__name">{{ site.Params.author_name | default site.Title }}</a>
+<a href="{{ .Site.Home.RelPermalink }}" class="site-header__name">{{ site.Params.author_name | default site.Title }}</a>
 <nav class="site-header__nav">
   {{ with site.Params.author_email }}<a href="mailto:{{ . }}">Почта</a>{{ end }}
   {{ with site.Params.author_telegram }}<a href="{{ . }}" target="_blank" rel="noopener">Telegram</a>{{ end }}
