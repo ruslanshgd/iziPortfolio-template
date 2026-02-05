@@ -13,9 +13,13 @@ env/
 .env
 .env.local
 
+# Bot session data
+telegram_bot/user_repos.json
+
 # IDE
 .vscode/
 .idea/
+.cursor/
 *.swp
 *.swo
 *~
