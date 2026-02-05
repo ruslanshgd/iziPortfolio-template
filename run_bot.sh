@@ -31,18 +31,25 @@ if [ -z "$HUGO_TEMPLATE_REPO" ]; then
     echo "⚠️  Предупреждение: HUGO_TEMPLATE_REPO не установлен, используется значение по умолчанию 'iziPortfolio-template'"
 fi
 
-# Активация виртуального окружения, если оно существует
+# Определение Python интерпретатора
 if [ -d .venv ]; then
-    echo "🐍 Активирую виртуальное окружение..."
-    source .venv/bin/activate
+    PYTHON_CMD=".venv/bin/python"
+    echo "🐍 Использую Python из виртуального окружения..."
+else
+    PYTHON_CMD="python3"
+    echo "⚠️  Виртуальное окружение не найдено, использую системный Python"
 fi
 
 # Проверка установки зависимостей
-if ! python -c "import aiogram" 2>/dev/null; then
+if ! $PYTHON_CMD -c "import aiogram" 2>/dev/null; then
     echo "📦 Устанавливаю зависимости..."
-    pip install -r telegram_bot/requirements.txt
+    if [ -d .venv ]; then
+        .venv/bin/pip install -r telegram_bot/requirements.txt
+    else
+        pip3 install -r telegram_bot/requirements.txt
+    fi
 fi
 
 # Запуск бота
 echo "🚀 Запускаю Telegram бота..."
-python -m telegram_bot.bot
+$PYTHON_CMD -m telegram_bot.bot
