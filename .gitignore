@@ -16,6 +16,10 @@ env/
 # Telegram bot (template repo contains only Hugo; bot lives elsewhere)
 telegram_bot/
 
+# Bot runner and env example — только для локальной разработки бота, не в шаблон
+run_bot.sh
+.env.example
+
 # IDE
 .vscode/
 .idea/
