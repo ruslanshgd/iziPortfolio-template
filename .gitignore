@@ -13,8 +13,8 @@ env/
 .env
 .env.local
 
-# Bot session data
-telegram_bot/user_repos.json
+# Telegram bot (template repo contains only Hugo; bot lives elsewhere)
+telegram_bot/
 
 # IDE
 .vscode/
