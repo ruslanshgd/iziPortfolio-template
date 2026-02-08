@@ -87,25 +87,22 @@ jobs:
           # layouts/partials/education-section.html
           EDUCATION_B64="e3sgd2l0aCBzaXRlLlBhcmFtcy5lZHVjYXRpb24gfX0KICB7eyAkaGFzQ291cnNlcyA6PSBndCAobGVuIC5jb3Vyc2VzKSAwIH19CiAge3sgJGhhc1VuaXZlcnNpdGllcyA6PSBndCAobGVuIC51bml2ZXJzaXRpZXMpIDAgfX0KICB7eyBpZiBvciAkaGFzQ291cnNlcyAkaGFzVW5pdmVyc2l0aWVzIH19CjxkaXYgY2xhc3M9ImVkdWNhdGlvbi13cmFwIj4KICA8c2VjdGlvbiBjbGFzcz0iZWR1Y2F0aW9uIHBvcnRmb2xpby1jb250ZW50IiBhcmlhLWxhYmVsbGVkYnk9ImVkdWNhdGlvbi1oZWFkaW5nIj4KICAgIDxoMiBjbGFzcz0iZWR1Y2F0aW9uX190aXRsZSIgaWQ9ImVkdWNhdGlvbi1oZWFkaW5nIj7QntCx0YDQsNC30L7QstCw0L3QuNC1PC9oMj4KCiAgICB7eyBpZiAkaGFzQ291cnNlcyB9fQogICAgPGRpdiBjbGFzcz0iZWR1Y2F0aW9uX19ibG9jayBlZHVjYXRpb25fX2Jsb2NrLS1jb3Vyc2VzIj4KICAgICAgPGgzIGNsYXNzPSJlZHVjYXRpb25fX3N1YnRpdGxlIj7QmtGD0YDRgdGLPC9oMz4KICAgICAgPHVsIGNsYXNzPSJlZHVjYXRpb24tbGlzdCBlZHVjYXRpb24tbGlzdC0tY291cnNlcyI+CiAgICAgICAge3sgcmFuZ2UgLmNvdXJzZXMgfX0KICAgICAgICA8bGkgY2xhc3M9ImVkdWNhdGlvbi1saXN0X19pdGVtIj4KICAgICAgICAgIDxwPgogICAgICAgICAgICB7eyBpZiAudXJsIH19CiAgICAgICAgICAgICAgPGEgaHJlZj0ie3sgLnVybCB9fSIgY2xhc3M9ImVkdWNhdGlvbi1saXN0X19saW5rIiB0YXJnZXQ9Il9ibGFuayIgcmVsPSJub29wZW5lciBub3JlZmVycmVyIj57eyAudGl0bGUgfX08L2E+CiAgICAgICAgICAgIHt7IGVsc2UgfX0KICAgICAgICAgICAgICB7eyAudGl0bGUgfX0KICAgICAgICAgICAge3sgZW5kIH19CiAgICAgICAgICAgIHt7IHdpdGggLnByb3ZpZGVyIH19IHt7IC4gfX17eyBlbmQgfX0KICAgICAgICAgICAge3sgaWYgb3IgLnllYXIgLnN0YXR1cyB9fSAmbmRhc2g7IHt7IGlmIC5zdGF0dXMgfX17eyAuc3RhdHVzIH19e3sgZWxzZSB9fXt7IC55ZWFyIH19INCz0L7QtHt7IGVuZCB9fXt7IGVuZCB9fQogICAgICAgICAgICB7eyB3aXRoIC5jZXJ0aWZpY2F0ZSB9fSAmbWRhc2g7IDxhIGhyZWY9Int7IC4gfX0iIGNsYXNzPSJlZHVjYXRpb24tbGlzdF9fY2VydGlmaWNhdGUiIHRhcmdldD0iX2JsYW5rIiByZWw9Im5vb3BlbmVyIG5vcmVmZXJyZXIiPtGB0LXRgNGC0LjRhNC40LrQsNGCPC9hPnt7IGVuZCB9fQogICAgICAgICAgPC9wPgogICAgICAgIDwvbGk+CiAgICAgICAge3sgZW5kIH19CiAgICAgIDwvdWw+CiAgICA8L2Rpdj4KICAgIHt7IGVuZCB9fQoKICAgIHt7IGlmICRoYXNVbml2ZXJzaXRpZXMgfX0KICAgIDxkaXYgY2xhc3M9ImVkdWNhdGlvbl9fYmxvY2sgZWR1Y2F0aW9uX19ibG9jay0tdW5pdmVyc2l0aWVzIj4KICAgICAgPGgzIGNsYXNzPSJlZHVjYXRpb25fX3N1YnRpdGxlIj7Qo9C90LjQstC10YDRgdC40YLQtdGCPC9oMz4KICAgICAgPHVsIGNsYXNzPSJlZHVjYXRpb24tbGlzdCBlZHVjYXRpb24tbGlzdC0tdW5pdmVyc2l0aWVzIj4KICAgICAgICB7eyByYW5nZSAudW5pdmVyc2l0aWVzIH19CiAgICAgICAgPGxpIGNsYXNzPSJlZHVjYXRpb24tbGlzdF9faXRlbSI+CiAgICAgICAgICA8cD4KICAgICAgICAgICAgPGVtPnt7IC5uYW1lIH19IHt7IC55ZWFyIH19INCz0L7QtDwvZW0+CiAgICAgICAgICA8L3A+CiAgICAgICAgICA8cD4KICAgICAgICAgICAge3sgLnNwZWNpYWxpdHkgfX17eyB3aXRoIC5kZWdyZWUgfX0sIHt7IC4gfX17eyBlbmQgfX17eyB3aXRoIC5ub3RlIH19ICZuZGFzaDsge3sgLiB9fXt7IGVuZCB9fQogICAgICAgICAgPC9wPgogICAgICAgIDwvbGk+CiAgICAgICAge3sgZW5kIH19CiAgICAgIDwvdWw+CiAgICA8L2Rpdj4KICAgIHt7IGVuZCB9fQogIDwvc2VjdGlvbj4KPC9kaXY+CiAge3sgZW5kIH19Cnt7IGVuZCB9fQoK"
           
-          # Always ensure templates are up-to-date (overwrite to ensure latest version)
-          echo "📝 Ensuring all Hugo templates are up-to-date..."
+          # Overwrite index, baseof, site-header, education from base64 (fallback if curl failed)
+          # head.html and career-section.html НЕ перезаписываем — используем версии из template (curl выше),
+          # чтобы на сайте были favicon и логотипы карьеры из актуального шаблона.
+          echo "📝 Ensuring Hugo templates are up-to-date..."
           echo "$INDEX_B64" | base64 -d > layouts/index.html
           echo "✅ Updated layouts/index.html"
           
           echo "$BASEOF_B64" | base64 -d > layouts/_default/baseof.html
           echo "✅ Updated layouts/_default/baseof.html"
           
-          echo "$HEAD_B64" | base64 -d > layouts/partials/head.html
-          echo "✅ Updated layouts/partials/head.html"
-          
           echo "$SITEHEADER_B64" | base64 -d > layouts/partials/site-header.html
           echo "✅ Updated layouts/partials/site-header.html"
           
-          echo "$CAREER_B64" | base64 -d > layouts/partials/career-section.html
-          echo "✅ Updated layouts/partials/career-section.html"
-          
           echo "$EDUCATION_B64" | base64 -d > layouts/partials/education-section.html
           echo "✅ Updated layouts/partials/education-section.html"
+          # head.html и career-section.html уже загружены из template (curl выше) — не перезаписываем
           
           echo ""
           echo "📁 Final layouts structure:"
