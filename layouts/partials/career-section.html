@@ -23,7 +23,7 @@
           {{ with .logo }}
           <div class="career-item__logo">
             {{ $logoPath := . }}{{ if not (hasPrefix $logoPath "/") }}{{ $logoPath = printf "/%s" $logoPath }}{{ end }}
-            <img src="{{ $logoPath | relURL }}" alt="" width="48" height="48">
+            <img src="{{ $logoPath | relURL }}" alt="" height="48" style="width:auto; max-width:120px;">
           </div>
           {{ end }}
           <p class="career-item__company">{{ .company }}</p>
@@ -50,7 +50,7 @@
           {{ with .Params.logo }}
           <div class="career-item__logo">
             {{ $logoPath := . }}{{ if not (hasPrefix $logoPath "/") }}{{ $logoPath = printf "/%s" $logoPath }}{{ end }}
-            <img src="{{ $logoPath | relURL }}" alt="" width="48" height="48">
+            <img src="{{ $logoPath | relURL }}" alt="" height="48" style="width:auto; max-width:120px;">
           </div>
           {{ end }}
           <p class="career-item__company">{{ .Title }}</p>
