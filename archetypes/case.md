@@ -20,10 +20,14 @@ layout: "center"        # "pinned" (правый нижний угол), "center
 company:
   - ""
 
-# 3. Целевая аудитория (1-2 строки)
+# 3. Контекст (опционально, 1-4 строки, список или текст)
+context:
+  - ""
+
+# 4. Целевая аудитория (1-2 строки)
 audience: ""
 
-# 4. Проблемы (1-4 строки, список)
+# 5. Проблемы (1-4 строки, список)
 problems:
   - ""
 
@@ -37,13 +41,13 @@ process_image: ""       # напр. "img/process/process-diagram" или "img/pr
 process_images: []      # массив объектов: [{ image: "img/process/process_0.png", caption: "Подпись под изображением" }] или массив строк для обратной совместимости
 process_text: ""
 
-# 7. Исследование и контекст
+# 8. Исследование и контекст
 research_context: ""
 research_artifact: ""   # напр. CJM, зачем и результаты
 research_blocks: []     # массив: { title, text, image }, напр. [{ title: "CJM", text: "...", image: "img/research/cjm" }] (поддержка: jpg, jpeg, png, webp)
 insights: []            # обязательный список выводов/инсайтов
 
-# 8. Макеты (повторяемый блок: заголовок, подзаголовок, текст, картинки)
+# 9. Макеты (повторяемый блок: заголовок, подзаголовок, текст, картинки)
 layout_blocks: []
 # - title: ""
 #   subtitle: ""
@@ -51,7 +55,7 @@ layout_blocks: []
 #   images: ["img/layouts/screen-1", "img/layouts/screen-2"]  # или с расширением: ["img/layouts/screen-1.png"] (поддержка: jpg, jpeg, png, webp)
 # before_after: { before: "", after: "", metric: "" }  # опционально
 
-# 9. Результаты кейса
+# 10. Результаты кейса
 results: ""
 # или results_list: []
 ---
