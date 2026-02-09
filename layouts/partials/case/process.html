@@ -3,7 +3,15 @@
 {{ if or $p.process_images $p.process_image $p.process_text }}
 <section class="case-section">
   <h2>Процесс</h2>
-  {{ with $p.process_text }}<p>{{ . }}</p>{{ end }}
+  {{ with $p.process_text }}
+    {{ if reflect.IsSlice . }}
+      <ul>
+        {{ range . }}{{ if . }}<li>{{ . }}</li>{{ end }}{{ end }}
+      </ul>
+    {{ else }}
+      <div class="markdown-content">{{ . | markdownify }}</div>
+    {{ end }}
+  {{ end }}
   {{ if $p.process_images }}
     {{ range $p.process_images }}
       {{ $imgPath := "" }}

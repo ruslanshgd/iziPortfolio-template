@@ -8,9 +8,19 @@
         {{ range . }}{{ if . }}<li>{{ . }}</li>{{ end }}{{ end }}
       </ul>
     {{ else }}
-      <p>{{ . }}</p>
+      <div class="markdown-content">{{ . | markdownify }}</div>
     {{ end }}
   {{ end }}
-  {{ with $p.team }}<p><strong>Команда:</strong> {{ . }}</p>{{ end }}
+  {{ with $p.team }}
+    {{ if reflect.IsSlice . }}
+      <p><strong>Команда:</strong></p>
+      <ul>
+        {{ range . }}{{ if . }}<li>{{ . }}</li>{{ end }}{{ end }}
+      </ul>
+    {{ else }}
+      <p><strong>Команда:</strong></p>
+      <div class="markdown-content">{{ . | markdownify }}</div>
+    {{ end }}
+  {{ end }}
 </section>
 {{ end }}

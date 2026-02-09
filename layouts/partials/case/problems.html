@@ -7,7 +7,7 @@
     {{ range . }}{{ if . }}<li>{{ . }}</li>{{ end }}{{ end }}
   </ul>
   {{ else }}
-  <p>{{ . }}</p>
+  <div class="markdown-content">{{ . | markdownify }}</div>
   {{ end }}
 </section>
 {{ end }}

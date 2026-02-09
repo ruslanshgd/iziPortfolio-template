@@ -2,6 +2,12 @@
 {{ with $p.audience }}
 <section class="case-section">
   <h2>Целевая аудитория</h2>
-  <p>{{ . }}</p>
+  {{ if reflect.IsSlice . }}
+  <ul>
+    {{ range . }}{{ if . }}<li>{{ . }}</li>{{ end }}{{ end }}
+  </ul>
+  {{ else }}
+  <div class="markdown-content">{{ . | markdownify }}</div>
+  {{ end }}
 </section>
 {{ end }}
