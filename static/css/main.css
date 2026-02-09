@@ -71,6 +71,7 @@ body {
 /* Cover block: вертикально — заголовок, описание, затем картинка обложки, без оверлея */
 .case-cover {
   padding: 2rem 0 3rem;
+  text-align: center;
 }
 
 .case-cover__content {
