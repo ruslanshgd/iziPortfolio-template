@@ -15,5 +15,8 @@
         {{ partial "site-header.html" . }}
       </footer>
     </div>
+    {{ if eq .Kind "home" }}
+    <script src="{{ "js/cases-filter.js" | relURL }}"></script>
+    {{ end }}
   </body>
 </html>

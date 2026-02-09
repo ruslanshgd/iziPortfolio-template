@@ -23,8 +23,56 @@
     </div>
 
     <section class="home-cases portfolio-content">
+      {{/* Collect unique companies and platforms from cases */}}
+      {{ $allCases := where $cases "Params.type" "case" }}
+      {{ $companies := slice }}
+      {{ $companySet := dict }}
+      {{ $hasWeb := false }}
+      {{ $hasMobile := false }}
+      {{ range $allCases }}
+        {{ with .Params.company_name }}
+          {{ if and (ne . "") (not (isset $companySet .)) }}
+            {{ $companySet = merge $companySet (dict . true) }}
+            {{ $companies = $companies | append . }}
+          {{ end }}
+        {{ end }}
+        {{ $platform := .Params.platform | default "web" }}
+        {{ if eq $platform "web" }}{{ $hasWeb = true }}{{ end }}
+        {{ if eq $platform "mobile" }}{{ $hasMobile = true }}{{ end }}
+      {{ end }}
+      {{ $companies = sort $companies }}
+      
+      {{/* Filters block */}}
+      {{ if or (gt (len $companies) 0) $hasWeb $hasMobile }}
+      <div class="cases-filters">
+        <div class="cases-filters__companies">
+          <button class="cases-filter-btn cases-filter-btn--company" data-filter="all" data-type="company">
+            Все компании
+          </button>
+          {{ range $companies }}
+          <button class="cases-filter-btn cases-filter-btn--company" data-filter="{{ . }}" data-type="company">
+            {{ . }}
+          </button>
+          {{ end }}
+        </div>
+        <div class="cases-filters__platforms">
+          {{ if and $hasWeb $hasMobile }}
+          <button class="cases-filter-btn cases-filter-btn--platform" data-filter="all" data-type="platform">
+            Все платформы
+          </button>
+          <button class="cases-filter-btn cases-filter-btn--platform" data-filter="web" data-type="platform">
+            Веб
+          </button>
+          <button class="cases-filter-btn cases-filter-btn--platform" data-filter="mobile" data-type="platform">
+            Мобильные приложения
+          </button>
+          {{ end }}
+        </div>
+      </div>
+      {{ end }}
+      
       <ul class="case-cards">
-        {{ range where $cases "Params.type" "case" }}
+        {{ range $allCases }}
         {{ $page := . }}
         {{ $img := false }}
         {{ with $page.Params.card_image }}{{ $img = partial "get-image-resource.html" (dict "page" $page "path" . "context" "card") }}{{ end }}
@@ -34,7 +82,11 @@
         {{ $layout := $page.Params.layout | default "center" }}
         {{ $imgWidth := 0 }}
         {{ if $img }}{{ $imgWidth = $img.Width }}{{ end }}
-        <li class="case-card case-card--{{ $platform }} case-card--layout-{{ $layout }}"{{ if and $img (le $imgWidth 768) }} data-image-width="{{ $imgWidth }}"{{ end }}>
+        {{ $companyName := $page.Params.company_name | default "" }}
+        <li class="case-card case-card--{{ $platform }} case-card--layout-{{ $layout }}" 
+            data-company="{{ $companyName }}" 
+            data-platform="{{ $platform }}"
+            {{ if and $img (le $imgWidth 768) }} data-image-width="{{ $imgWidth }}"{{ end }}>
           <a class="case-card__link" href="{{ $page.RelPermalink }}">
             <div class="case-card__body">
               {{ with $page.Params.company_name }}<p class="case-card__company">{{ . }}</p>{{ end }}

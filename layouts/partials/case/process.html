@@ -6,11 +6,27 @@
   {{ with $p.process_text }}<p>{{ . }}</p>{{ end }}
   {{ if $p.process_images }}
     {{ range $p.process_images }}
-      {{ $imgRes := partial "get-image-resource.html" (dict "page" $page "path" . "context" "process") }}
-      {{ if $imgRes }}
-        <p><img src="{{ $imgRes.RelPermalink }}" alt="Процесс" style="max-width:100%; height:auto;"></p>
+      {{ $imgPath := "" }}
+      {{ $caption := "" }}
+      {{ if reflect.IsMap . }}
+        {{ $imgPath = .image }}
+        {{ $caption = .caption }}
       {{ else }}
-        <p><img src="{{ . | relURL }}" alt="Процесс" style="max-width:100%; height:auto;"></p>
+        {{ $imgPath = . }}
+      {{ end }}
+      {{ if $imgPath }}
+        {{ $imgRes := partial "get-image-resource.html" (dict "page" $page "path" $imgPath "context" "process") }}
+        {{ if $imgRes }}
+          <figure>
+            <img src="{{ $imgRes.RelPermalink }}" alt="Процесс" style="max-width:100%; height:auto;">
+            {{ if $caption }}<figcaption>{{ $caption }}</figcaption>{{ end }}
+          </figure>
+        {{ else }}
+          <figure>
+            <img src="{{ $imgPath | relURL }}" alt="Процесс" style="max-width:100%; height:auto;">
+            {{ if $caption }}<figcaption>{{ $caption }}</figcaption>{{ end }}
+          </figure>
+        {{ end }}
       {{ end }}
     {{ end }}
   {{ else if $p.process_image }}

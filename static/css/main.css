@@ -492,6 +492,88 @@ body {
   padding-bottom: 4rem;
 }
 
+/* --- Cases filters (фильтры кейсов) --- */
+.cases-filters {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #e8e8e8;
+  flex-wrap: wrap;
+}
+
+.cases-filters__companies {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  flex: 1;
+  min-width: 0;
+}
+
+.cases-filters__platforms {
+  display: flex;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+
+.cases-filter-btn {
+  padding: 0.5rem 1rem;
+  border: 1px solid #d0d0d0;
+  background: #fff;
+  border-radius: 6px;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.cases-filter-btn:hover {
+  border-color: #0055cc;
+  color: #0055cc;
+}
+
+.cases-filter-btn--active {
+  background: #0055cc;
+  border-color: #0055cc;
+  color: #fff;
+}
+
+.cases-filter-btn--active:hover {
+  background: #0044aa;
+  border-color: #0044aa;
+  color: #fff;
+}
+
+.case-card {
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.case-card--hidden {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .cases-filters {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .cases-filters__companies,
+  .cases-filters__platforms {
+    width: 100%;
+    justify-content: flex-start;
+  }
+  
+  .cases-filter-btn {
+    font-size: 0.875rem;
+    padding: 0.4375rem 0.875rem;
+  }
+}
+
 .case-cards {
   list-style: none;
   padding: 0;

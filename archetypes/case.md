@@ -27,12 +27,14 @@ audience: ""
 problems:
   - ""
 
-# 5. Роль (обязательно), команда (опционально)
-role: ""
+# 5. Роль (обязательно, список), команда (опционально)
+role:
+  - ""
 team: ""
 
 # 6. Процесс
-process_image: ""       # напр. "img/process/process-diagram" или "img/process/process-diagram.png" (поддержка: jpg, jpeg, png, webp)
+process_image: ""       # напр. "img/process/process-diagram" или "img/process/process-diagram.png" (поддержка: jpg, jpeg, png, webp) - устаревшее, используйте process_images
+process_images: []      # массив объектов: [{ image: "img/process/process_0.png", caption: "Подпись под изображением" }] или массив строк для обратной совместимости
 process_text: ""
 
 # 7. Исследование и контекст
