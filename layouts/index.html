@@ -1,6 +1,7 @@
 {{ define "main" }}
-  {{ $casesSection := .Site.GetPage "section" "cases" }}
-  {{ $cases := where $casesSection.RegularPages "Params.type" "case" }}
+  {{/* Все страницы из секции cases, включая вложенные папки */}}
+  {{ $cases := where .Site.RegularPages "Section" "cases" }}
+  {{ $cases = where $cases "Params.type" "case" }}
   <div class="home">
     <div class="home-hero-wrap">
     <section class="home-hero portfolio-content">
@@ -23,8 +24,8 @@
     </div>
 
     <section class="home-cases portfolio-content">
-      {{/* Collect unique companies and platforms from cases */}}
-      {{ $allCases := where $cases "Params.type" "case" }}
+      {{/* Собираем уникальные компании и типы платформ из кейсов */}}
+      {{ $allCases := $cases }}
       {{ $companies := slice }}
       {{ $companySet := dict }}
       {{ $hasWeb := false }}
@@ -42,31 +43,39 @@
       {{ end }}
       {{ $companies = sort $companies }}
       
-      {{/* Filters block */}}
-      {{ if or (gt (len $companies) 0) $hasWeb $hasMobile }}
-      <div class="cases-filters">
-        <div class="cases-filters__companies">
-          <button class="cases-filter-btn cases-filter-btn--company" data-filter="all" data-type="company">
-            Все компании
-          </button>
-          {{ range $companies }}
-          <button class="cases-filter-btn cases-filter-btn--company" data-filter="{{ . }}" data-type="company">
-            {{ . }}
-          </button>
-          {{ end }}
+      {{/* Блок фильтров: показываем всегда, когда есть хотя бы один кейс */}}
+      {{ if gt (len $allCases) 0 }}
+      <div class="cases-filters" role="group" aria-label="Фильтры кейсов">
+        <div class="cases-filters__segment cases-filters__companies" role="group" aria-label="По компании">
+          <span class="cases-filters__label">Компании:</span>
+          <div class="cases-filter-segment" data-type="company">
+            <button type="button" class="cases-filter-btn cases-filter-btn--company cases-filter-btn--segment" data-filter="all" data-type="company">
+              Все
+            </button>
+            {{ range $companies }}
+            <button type="button" class="cases-filter-btn cases-filter-btn--company cases-filter-btn--segment" data-filter="{{ . }}" data-type="company">
+              {{ . }}
+            </button>
+            {{ end }}
+          </div>
         </div>
-        <div class="cases-filters__platforms">
-          {{ if and $hasWeb $hasMobile }}
-          <button class="cases-filter-btn cases-filter-btn--platform" data-filter="all" data-type="platform">
-            Все платформы
-          </button>
-          <button class="cases-filter-btn cases-filter-btn--platform" data-filter="web" data-type="platform">
-            Веб
-          </button>
-          <button class="cases-filter-btn cases-filter-btn--platform" data-filter="mobile" data-type="platform">
-            Мобильные приложения
-          </button>
-          {{ end }}
+        <div class="cases-filters__segment cases-filters__platforms" role="group" aria-label="По платформе">
+          <span class="cases-filters__label">Платформа:</span>
+          <div class="cases-filter-segment" data-type="platform">
+            <button type="button" class="cases-filter-btn cases-filter-btn--platform cases-filter-btn--segment" data-filter="all" data-type="platform">
+              Все
+            </button>
+            {{ if $hasWeb }}
+            <button type="button" class="cases-filter-btn cases-filter-btn--platform cases-filter-btn--segment" data-filter="web" data-type="platform">
+              Веб
+            </button>
+            {{ end }}
+            {{ if $hasMobile }}
+            <button type="button" class="cases-filter-btn cases-filter-btn--platform cases-filter-btn--segment" data-filter="mobile" data-type="platform">
+              Мобильные
+            </button>
+            {{ end }}
+          </div>
         </div>
       </div>
       {{ end }}
