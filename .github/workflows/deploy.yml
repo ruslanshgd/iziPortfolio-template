@@ -23,12 +23,31 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      HUGO_VERSION: 0.128.0
+      HUGO_VERSION: 0.155.2
     steps:
       - name: Install Hugo CLI
         run: |
-          wget -O ${{ runner.temp }}/hugo.deb https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb
-          sudo dpkg -i ${{ runner.temp }}/hugo.deb
+          # Try to download Hugo with retries
+          MAX_RETRIES=3
+          RETRY_COUNT=0
+          while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
+            if wget -O ${{ runner.temp }}/hugo.deb https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb; then
+              break
+            fi
+            RETRY_COUNT=$((RETRY_COUNT + 1))
+            if [ $RETRY_COUNT -lt $MAX_RETRIES ]; then
+              echo "⚠️ Download failed, retrying in 5 seconds... (attempt $RETRY_COUNT/$MAX_RETRIES)"
+              sleep 5
+            else
+              echo "❌ Failed to download Hugo after $MAX_RETRIES attempts"
+              echo "Trying alternative: installing Hugo via snap..."
+              sudo snap install hugo --channel=extended/stable
+              exit 0
+            fi
+          done
+          if [ -f ${{ runner.temp }}/hugo.deb ]; then
+            sudo dpkg -i ${{ runner.temp }}/hugo.deb || sudo apt-get install -f -y
+          fi
       - name: Install Dart Sass
         run: sudo snap install dart-sass
       - name: Checkout

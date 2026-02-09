@@ -1,16 +1,25 @@
 {{ $page := . }}
 {{ $p := $page.Params }}
-{{ if or $p.process_image $p.process_text }}
+{{ if or $p.process_images $p.process_image $p.process_text }}
 <section class="case-section">
   <h2>Процесс</h2>
-  {{ with $p.process_image }}
-    {{ $imgRes := partial "get-image-resource.html" (dict "page" $page "path" . "context" "process") }}
+  {{ with $p.process_text }}<p>{{ . }}</p>{{ end }}
+  {{ if $p.process_images }}
+    {{ range $p.process_images }}
+      {{ $imgRes := partial "get-image-resource.html" (dict "page" $page "path" . "context" "process") }}
+      {{ if $imgRes }}
+        <p><img src="{{ $imgRes.RelPermalink }}" alt="Процесс" style="max-width:100%; height:auto;"></p>
+      {{ else }}
+        <p><img src="{{ . | relURL }}" alt="Процесс" style="max-width:100%; height:auto;"></p>
+      {{ end }}
+    {{ end }}
+  {{ else if $p.process_image }}
+    {{ $imgRes := partial "get-image-resource.html" (dict "page" $page "path" $p.process_image "context" "process") }}
     {{ if $imgRes }}
       <p><img src="{{ $imgRes.RelPermalink }}" alt="Процесс" style="max-width:100%; height:auto;"></p>
     {{ else }}
-      <p><img src="{{ . | relURL }}" alt="Процесс" style="max-width:100%; height:auto;"></p>
+      <p><img src="{{ $p.process_image | relURL }}" alt="Процесс" style="max-width:100%; height:auto;"></p>
     {{ end }}
   {{ end }}
-  {{ with $p.process_text }}<p>{{ . }}</p>{{ end }}
 </section>
 {{ end }}

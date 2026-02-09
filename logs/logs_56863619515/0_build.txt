@@ -1,0 +1,50 @@
+﻿2026-02-09T16:13:33.6874796Z Current runner version: '2.331.0'
+2026-02-09T16:13:33.6899963Z ##[group]Runner Image Provisioner
+2026-02-09T16:13:33.6901091Z Hosted Compute Agent
+2026-02-09T16:13:33.6901695Z Version: 20260123.484
+2026-02-09T16:13:33.6902380Z Commit: 6bd6555ca37d84114959e1c76d2c01448ff61c5d
+2026-02-09T16:13:33.6903145Z Build Date: 2026-01-23T19:41:17Z
+2026-02-09T16:13:33.6903780Z Worker ID: {8f5cfa5b-b26d-4401-a4dc-368d85690cf5}
+2026-02-09T16:13:33.6904540Z Azure Region: eastus2
+2026-02-09T16:13:33.6905068Z ##[endgroup]
+2026-02-09T16:13:33.6906615Z ##[group]Operating System
+2026-02-09T16:13:33.6907337Z Ubuntu
+2026-02-09T16:13:33.6907835Z 24.04.3
+2026-02-09T16:13:33.6908296Z LTS
+2026-02-09T16:13:33.6908716Z ##[endgroup]
+2026-02-09T16:13:33.6909333Z ##[group]Runner Image
+2026-02-09T16:13:33.6909849Z Image: ubuntu-24.04
+2026-02-09T16:13:33.6910358Z Version: 20260201.15.1
+2026-02-09T16:13:33.6911839Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260201.15/images/ubuntu/Ubuntu2404-Readme.md
+2026-02-09T16:13:33.6913395Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260201.15
+2026-02-09T16:13:33.6914272Z ##[endgroup]
+2026-02-09T16:13:33.6915339Z ##[group]GITHUB_TOKEN Permissions
+2026-02-09T16:13:33.6917260Z Contents: read
+2026-02-09T16:13:33.6917807Z Metadata: read
+2026-02-09T16:13:33.6918318Z Pages: write
+2026-02-09T16:13:33.6918948Z ##[endgroup]
+2026-02-09T16:13:33.6921051Z Secret source: Actions
+2026-02-09T16:13:33.6921771Z Prepare workflow directory
+2026-02-09T16:13:33.7326290Z Prepare all required actions
+2026-02-09T16:13:33.7364439Z Getting action download info
+2026-02-09T16:13:34.1623328Z Download action repository 'actions/checkout@v4' (SHA:34e114876b0b11c390a56381ad16ebd13914f8d5)
+2026-02-09T16:13:34.2426105Z Download action repository 'actions/configure-pages@v5' (SHA:983d7736d9b0ae728b81ab479565c72886d7745b)
+2026-02-09T16:13:34.5141448Z Download action repository 'actions/upload-pages-artifact@v3' (SHA:56afc609e74202658d3ffba0e8f6dda462b719fa)
+2026-02-09T16:13:34.7893561Z Getting action download info
+2026-02-09T16:13:35.1472169Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-02-09T16:13:35.2923481Z Complete job name: build
+2026-02-09T16:13:35.3661443Z ##[group]Run wget -O /home/runner/work/_temp/hugo.deb https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb
+2026-02-09T16:13:35.3665877Z [36;1mwget -O /home/runner/work/_temp/hugo.deb https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb[0m
+2026-02-09T16:13:35.3668725Z [36;1msudo dpkg -i /home/runner/work/_temp/hugo.deb[0m
+2026-02-09T16:13:35.3708075Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-02-09T16:13:35.3709623Z env:
+2026-02-09T16:13:35.3710358Z   HUGO_VERSION: 0.128.0
+2026-02-09T16:13:35.3711422Z ##[endgroup]
+2026-02-09T16:13:35.3876427Z --2026-02-09 16:13:35--  https://github.com/gohugoio/hugo/releases/download/v0.128.0/hugo_extended_0.128.0_linux-amd64.deb
+2026-02-09T16:13:35.4117550Z Resolving github.com (github.com)... 140.82.114.4
+2026-02-09T16:13:35.4171648Z Connecting to github.com (github.com)|140.82.114.4|:443... connected.
+2026-02-09T16:13:35.9665422Z HTTP request sent, awaiting response... 500 Internal Server Error
+2026-02-09T16:13:35.9667962Z 2026-02-09 16:13:35 ERROR 500: Internal Server Error.
+2026-02-09T16:13:35.9669336Z 
+2026-02-09T16:13:35.9697856Z ##[error]Process completed with exit code 8.
+2026-02-09T16:13:35.9899085Z Cleaning up orphan processes
