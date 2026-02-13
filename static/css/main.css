@@ -172,18 +172,25 @@ body {
   align-items: center;
 }
 
-/* Mobile: iPhone frame mockup — 278px wide, height auto (like marco.fyi) */
+/* Mobile: full width container, 278px screen (like marco.fyi) */
 .layout-block__mockup--mobile {
   position: relative;
-  width: 278px;
-  margin: 0 auto;
+  width: 100%;
   flex-shrink: 0;
+  display: flex;
+  justify-content: center;
 }
 
-/* Screen area: full width, image keeps intrinsic aspect ratio */
+/* Inner wrapper: 278px, defines overlay coordinate system */
+.layout-block__mockup--mobile .layout-block__mockup-inner {
+  position: relative;
+  width: 278px;
+}
+
+/* Screen: 278px, image keeps intrinsic aspect ratio */
 .layout-block__mockup--mobile .layout-block__mockup-screen {
   position: relative;
-  width: 100%;
+  width: 278px;
   z-index: 1;
 }
 
@@ -194,17 +201,24 @@ body {
   vertical-align: top;
 }
 
-/* iPhone frame: when present, sizes mockup and overlays; screen fits inside cutout */
+/* iPhone frame overlay: 278×561 (1952/3942 ratio), positioned on top */
 .layout-block__mockup--mobile .layout-block__mockup-frame {
-  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 278px;
-  height: auto;
-  position: relative;
+  height: 561px;
+  object-fit: contain;
+  object-position: top left;
   z-index: 2;
   pointer-events: none;
 }
 
-/* With frame: screen positioned inside cutout (~87% width, ~88% height) */
+/* With frame: screen inside cutout (87%×88% of frame), screenshot fits with aspect ratio */
+.layout-block__mockup--mobile:has(.layout-block__mockup-frame) .layout-block__mockup-inner {
+  height: 561px;
+}
+
 .layout-block__mockup--mobile:has(.layout-block__mockup-frame) .layout-block__mockup-screen {
   position: absolute;
   top: 6%;
