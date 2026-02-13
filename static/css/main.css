@@ -221,10 +221,6 @@ body {
 
 .layout-block__mockup--mobile:has(.layout-block__mockup-frame) .layout-block__mockup-screen {
   position: absolute;
-  top: 6%;
-  left: 6.5%;
-  right: 6.5%;
-  bottom: 6%;
   width: auto;
   height: auto;
 }
