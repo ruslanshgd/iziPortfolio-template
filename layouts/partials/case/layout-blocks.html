@@ -16,12 +16,12 @@
         {{ if $imgRes }}
           {{ if eq $platform "mobile" }}
           <div class="layout-block__mockup layout-block__mockup--mobile">
+            {{ if fileExists "static/images/frames/iphone.webp" }}
+            <img class="layout-block__mockup-frame" src="{{ "images/frames/iphone.webp" | relURL }}" alt="" role="presentation" width="278">
+            {{ end }}
             <div class="layout-block__mockup-screen">
               <img src="{{ $imgRes.RelPermalink }}" alt="">
             </div>
-            {{ if fileExists "static/images/frames/iphone.webp" }}
-            <img class="layout-block__mockup-frame" src="{{ "images/frames/iphone.webp" | relURL }}" alt="" role="presentation">
-            {{ end }}
           </div>
           {{ else }}
           <div class="layout-block__mockup layout-block__mockup--web">
@@ -36,12 +36,12 @@
         {{ else }}
           {{ if eq $platform "mobile" }}
           <div class="layout-block__mockup layout-block__mockup--mobile">
+            {{ if fileExists "static/images/frames/iphone.webp" }}
+            <img class="layout-block__mockup-frame" src="{{ "images/frames/iphone.webp" | relURL }}" alt="" role="presentation" width="278">
+            {{ end }}
             <div class="layout-block__mockup-screen">
               <img src="{{ . | relURL }}" alt="">
             </div>
-            {{ if fileExists "static/images/frames/iphone.webp" }}
-            <img class="layout-block__mockup-frame" src="{{ "images/frames/iphone.webp" | relURL }}" alt="" role="presentation">
-            {{ end }}
           </div>
           {{ else }}
           <div class="layout-block__mockup layout-block__mockup--web">

@@ -159,6 +159,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: var(--gap);
+  width: 100%;
 }
 
 /* Layout block mockup container: background #f7f7f9, 32px radius */
@@ -171,39 +172,53 @@ body {
   align-items: center;
 }
 
-/* Mobile: iPhone frame mockup */
+/* Mobile: iPhone frame mockup — 278px wide, height auto (like marco.fyi) */
 .layout-block__mockup--mobile {
   position: relative;
-  max-width: 320px;
+  width: 278px;
   margin: 0 auto;
+  flex-shrink: 0;
 }
 
+/* Screen area: full width, image keeps intrinsic aspect ratio */
 .layout-block__mockup--mobile .layout-block__mockup-screen {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 87.5%;
-  aspect-ratio: 375 / 812;
-  overflow: hidden;
-  border-radius: 12px;
+  position: relative;
+  width: 100%;
   z-index: 1;
 }
 
 .layout-block__mockup--mobile .layout-block__mockup-screen img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.layout-block__mockup--mobile .layout-block__mockup-frame {
-  position: relative;
-  width: 100%;
   height: auto;
   display: block;
+  vertical-align: top;
+}
+
+/* iPhone frame: when present, sizes mockup and overlays; screen fits inside cutout */
+.layout-block__mockup--mobile .layout-block__mockup-frame {
+  display: block;
+  width: 278px;
+  height: auto;
+  position: relative;
   z-index: 2;
   pointer-events: none;
+}
+
+/* With frame: screen positioned inside cutout (~87% width, ~88% height) */
+.layout-block__mockup--mobile:has(.layout-block__mockup-frame) .layout-block__mockup-screen {
+  position: absolute;
+  top: 6%;
+  left: 6.5%;
+  right: 6.5%;
+  bottom: 6%;
+  width: auto;
+  height: auto;
+}
+
+.layout-block__mockup--mobile:has(.layout-block__mockup-frame) .layout-block__mockup-screen img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 /* Web: image with zoom button */
