@@ -1,21 +1,58 @@
 {{ $page := . }}
 {{ $p := $page.Params }}
+{{ $platform := $p.platform | default "web" }}
 {{ with $p.layout_blocks }}
 <section class="case-section">
   <h2>Макеты</h2>
   {{ range . }}
-  <div class="layout-block">
+  <div class="layout-block layout-block--{{ $platform }}">
     {{ with .title }}<h3 class="layout-block__title">{{ . }}</h3>{{ end }}
     {{ with .subtitle }}<p class="layout-block__subtitle">{{ . }}</p>{{ end }}
-    {{ with .text }}<p>{{ . }}</p>{{ end }}
+    {{ with .text }}<p class="layout-block__text">{{ . }}</p>{{ end }}
     {{ with .images }}
     <div class="layout-block__images">
       {{ range . }}
         {{ $imgRes := partial "get-image-resource.html" (dict "page" $page "path" . "context" "layout") }}
         {{ if $imgRes }}
-          <img src="{{ $imgRes.RelPermalink }}" alt="">
+          {{ if eq $platform "mobile" }}
+          <div class="layout-block__mockup layout-block__mockup--mobile">
+            <div class="layout-block__mockup-screen">
+              <img src="{{ $imgRes.RelPermalink }}" alt="">
+            </div>
+            {{ if fileExists "static/images/frames/iphone.webp" }}
+            <img class="layout-block__mockup-frame" src="{{ "images/frames/iphone.webp" | relURL }}" alt="" role="presentation">
+            {{ end }}
+          </div>
+          {{ else }}
+          <div class="layout-block__mockup layout-block__mockup--web">
+            <div class="layout-block__mockup-image-wrap">
+              <img class="layout-block__mockup-img" src="{{ $imgRes.RelPermalink }}" alt="" data-full-src="{{ $imgRes.RelPermalink }}">
+              <button type="button" class="layout-block__zoom-btn" aria-label="Открыть в полном размере">
+                <i data-lucide="zoom-in" class="layout-block__zoom-icon"></i>
+              </button>
+            </div>
+          </div>
+          {{ end }}
         {{ else }}
-          <img src="{{ . | relURL }}" alt="">
+          {{ if eq $platform "mobile" }}
+          <div class="layout-block__mockup layout-block__mockup--mobile">
+            <div class="layout-block__mockup-screen">
+              <img src="{{ . | relURL }}" alt="">
+            </div>
+            {{ if fileExists "static/images/frames/iphone.webp" }}
+            <img class="layout-block__mockup-frame" src="{{ "images/frames/iphone.webp" | relURL }}" alt="" role="presentation">
+            {{ end }}
+          </div>
+          {{ else }}
+          <div class="layout-block__mockup layout-block__mockup--web">
+            <div class="layout-block__mockup-image-wrap">
+              <img class="layout-block__mockup-img" src="{{ . | relURL }}" alt="" data-full-src="{{ . | relURL }}">
+              <button type="button" class="layout-block__zoom-btn" aria-label="Открыть в полном размере">
+                <i data-lucide="zoom-in" class="layout-block__zoom-icon"></i>
+              </button>
+            </div>
+          </div>
+          {{ end }}
         {{ end }}
       {{ end }}
     </div>
@@ -36,4 +73,15 @@
   </div>
   {{ end }}
 </section>
+  <div id="layout-modal" class="layout-modal" aria-hidden="true">
+  <div class="layout-modal__backdrop"></div>
+  <div class="layout-modal__content">
+    <button type="button" class="layout-modal__close" aria-label="Закрыть">
+      <i data-lucide="x"></i>
+    </button>
+    <img class="layout-modal__img" src="" alt="">
+  </div>
+</div>
+<script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+<script src="{{ "js/layout-blocks.js" | relURL }}"></script>
 {{ end }}
