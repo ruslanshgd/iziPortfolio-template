@@ -7,7 +7,6 @@
   {{ range . }}
   <div class="layout-block layout-block--{{ $platform }}">
     {{ with .title }}<h3 class="layout-block__title">{{ . }}</h3>{{ end }}
-    {{ with .subtitle }}<p class="layout-block__subtitle">{{ . }}</p>{{ end }}
     {{ with .text }}<p class="layout-block__text">{{ . }}</p>{{ end }}
     {{ with .images }}
     <div class="layout-block__images">
@@ -58,7 +57,13 @@
     </div>
     {{ end }}
     {{ with .figma_url }}
-      {{ $embedURL := printf "https://www.figma.com/embed?embed_host=share&url=%s" (urlquery .) }}
+      {{/* Формат embed как в Figma Share: embed.figma.com/proto/...?...&embed-host=share */}}
+      {{ $step1 := . | replace "https://www.figma.com/" "https://embed.figma.com/" }}
+      {{ $toEmbed := $step1 | replace "https://figma.com/" "https://embed.figma.com/" }}
+      {{ $embedURL := $toEmbed }}
+      {{ if not (in $toEmbed "embed-host=") }}
+        {{ if in $toEmbed "?" }}{{ $embedURL = printf "%s&embed-host=share" $toEmbed }}{{ else }}{{ $embedURL = printf "%s?embed-host=share" $toEmbed }}{{ end }}
+      {{ end }}
       {{ if eq $platform "mobile" }}
       <div class="layout-block__mockup layout-block__mockup--mobile">
         <div class="layout-block__mockup-inner">
