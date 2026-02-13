@@ -57,18 +57,18 @@
     </div>
     {{ end }}
     {{ with .figma_url }}
-      {{/* Формат embed как в Figma Share: embed.figma.com/proto/...?...&embed-host=share */}}
-      {{ $step1 := . | replace "https://www.figma.com/" "https://embed.figma.com/" }}
-      {{ $toEmbed := $step1 | replace "https://figma.com/" "https://embed.figma.com/" }}
-      {{ $embedURL := $toEmbed }}
-      {{ if not (in $toEmbed "embed-host=") }}
-        {{ if in $toEmbed "?" }}{{ $embedURL = printf "%s&embed-host=share" $toEmbed }}{{ else }}{{ $embedURL = printf "%s?embed-host=share" $toEmbed }}{{ end }}
-      {{ end }}
+      {{/* Embed URL: replace www/figma with embed.figma.com, then add embed-host=share */}}
+      {{ $base := . | replace "https://www.figma.com" "https://embed.figma.com" | replace "https://figma.com" "https://embed.figma.com" }}
+      {{ $src := $base }}
+      {{ if and $base (hasPrefix $base "https://embed.figma.com") }}
+        {{ if not (in $base "embed-host=") }}
+          {{ if in $base "?" }}{{ $src = printf "%s&embed-host=share" $base }}{{ else }}{{ $src = printf "%s?embed-host=share" $base }}{{ end }}
+        {{ end }}
       {{ if eq $platform "mobile" }}
       <div class="layout-block__mockup layout-block__mockup--mobile">
         <div class="layout-block__mockup-inner">
           <div class="layout-block__mockup-screen">
-            <iframe src="{{ $embedURL }}" allowfullscreen loading="lazy"></iframe>
+            <iframe src="{{ $src }}" allowfullscreen loading="lazy"></iframe>
           </div>
           <img class="layout-block__mockup-frame" src="{{ "images/frames/iphone.webp" | relURL }}" alt="" role="presentation" width="278" height="561">
         </div>
@@ -76,9 +76,10 @@
       {{ else }}
       <div class="layout-block__mockup layout-block__mockup--web">
         <div class="layout-block__figma-wrap">
-          <iframe src="{{ $embedURL }}" allowfullscreen loading="lazy"></iframe>
+          <iframe src="{{ $src }}" allowfullscreen loading="lazy"></iframe>
         </div>
       </div>
+      {{ end }}
       {{ end }}
     {{ end }}
   </div>
