@@ -57,6 +57,25 @@
       {{ end }}
     </div>
     {{ end }}
+    {{ with .figma_url }}
+      {{ $embedURL := printf "https://www.figma.com/embed?embed_host=share&url=%s" (urlquery .) }}
+      {{ if eq $platform "mobile" }}
+      <div class="layout-block__mockup layout-block__mockup--mobile">
+        <div class="layout-block__mockup-inner">
+          <div class="layout-block__mockup-screen">
+            <iframe src="{{ $embedURL }}" allowfullscreen loading="lazy"></iframe>
+          </div>
+          <img class="layout-block__mockup-frame" src="{{ "images/frames/iphone.webp" | relURL }}" alt="" role="presentation" width="278" height="561">
+        </div>
+      </div>
+      {{ else }}
+      <div class="layout-block__mockup layout-block__mockup--web">
+        <div class="layout-block__figma-wrap">
+          <iframe src="{{ $embedURL }}" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+      {{ end }}
+    {{ end }}
   </div>
   {{ end }}
   {{ with $p.before_after }}

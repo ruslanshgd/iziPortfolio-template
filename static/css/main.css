@@ -231,6 +231,31 @@ body {
   object-fit: contain;
 }
 
+/* Figma iframe inside mobile mockup screen */
+.layout-block__mockup-screen iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 0;
+}
+
+/* Figma iframe for web -- 16:9 responsive container */
+.layout-block__figma-wrap {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; /* 16:9 */
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.layout-block__figma-wrap iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
 /* Web: image with zoom button */
 .layout-block__mockup--web {
   position: relative;
