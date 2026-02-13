@@ -2,7 +2,13 @@
 {{ with $p.results }}
 <section class="case-section results-block">
   <h2>Результаты кейса</h2>
-  <p>{{ . }}</p>
+  {{ if reflect.IsSlice . }}
+  <ul>
+    {{ range . }}{{ if . }}<li>{{ . }}</li>{{ end }}{{ end }}
+  </ul>
+  {{ else }}
+  <div class="markdown-content">{{ . | markdownify }}</div>
+  {{ end }}
 </section>
 {{ end }}
 {{ with $p.results_list }}
