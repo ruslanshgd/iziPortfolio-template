@@ -231,6 +231,16 @@ body {
   object-fit: contain;
 }
 
+/* Figma iframe: mockup-screen must have explicit size (iframe has no intrinsic dimensions) */
+.layout-block__mockup--mobile:has(.layout-block__mockup-frame) .layout-block__mockup-screen:has(iframe) {
+  position: absolute;
+  top: 7%;
+  left: 6.5%;
+  width: 87%;
+  height: 86%;
+  min-height: 400px;
+}
+
 /* Figma iframe inside mobile mockup screen */
 .layout-block__mockup-screen iframe {
   width: 100%;
