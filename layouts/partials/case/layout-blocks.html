@@ -5,7 +5,7 @@
 <section class="case-section">
   <h2>Макеты</h2>
   {{ range . }}
-  <div class="layout-block layout-block--{{ $platform }}" data-debug-figma="{{ if .figma_url }}present{{ else }}missing{{ end }}">
+  <div class="layout-block layout-block--{{ $platform }}">
     {{ with .title }}<h3 class="layout-block__title">{{ . }}</h3>{{ end }}
     {{ with .text }}<p class="layout-block__text">{{ . }}</p>{{ end }}
     {{ with .images }}
