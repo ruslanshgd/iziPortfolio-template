@@ -1,8 +1,0 @@
-﻿2026-02-15T07:42:51.3438142Z ##[group]Run sudo snap install dart-sass
-2026-02-15T07:42:51.3438970Z [36;1msudo snap install dart-sass[0m
-2026-02-15T07:42:51.3493150Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
-2026-02-15T07:42:51.3494057Z env:
-2026-02-15T07:42:51.3494497Z   HUGO_VERSION: 0.155.2
-2026-02-15T07:42:51.3495032Z ##[endgroup]
-2026-02-15T07:42:55.5965503Z 2026-02-15T07:42:55Z INFO Waiting for automatic snapd restart...
-2026-02-15T07:43:03.5417744Z dart-sass 1.97.3 from Joe Mooring (jmooring) installed

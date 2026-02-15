@@ -67,8 +67,8 @@
           {{ if not (in $base "device-frame=") }}{{ $src = printf "%s&device-frame=false" $base }}{{ end }}
         {{ end }}
       {{ end }}
-      {{/* Only embed when URL is actually embed domain with path (/proto/ or /file/) — otherwise browser may load www and get X-Frame-Options */}}
-      {{ if and $src (hasPrefix $src "https://embed.figma.com") (or (in $src "/proto/") (in $src "/file/")) }}
+      {{/* Only embed when URL is embed domain with path: /proto/ (prototype), /file/ (file), or /design/ (design) — otherwise avoid bare domain (X-Frame-Options) */}}
+      {{ if and $src (hasPrefix $src "https://embed.figma.com") (or (in $src "/proto/") (in $src "/file/") (in $src "/design/")) }}
       {{ if eq $platform "mobile" }}
       <div class="layout-block__mockup layout-block__mockup--mobile">
         <div class="layout-block__mockup-inner">
