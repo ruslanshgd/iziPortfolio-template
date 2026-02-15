@@ -57,7 +57,7 @@
     </div>
     {{ end }}
     {{ with .figma_url }}
-      {{/* Embed URL: replace www/figma with embed.figma.com, add embed-host (required), device-frame=false (we use our iPhone mockup) */}}
+      {{/* Embed URL: must use embed.figma.com (www sets X-Frame-Options). Replace and require /proto/ or /file/ so we never load bare domain that redirects to www. */}}
       {{ $base := . | replace "https://www.figma.com" "https://embed.figma.com" | replace "https://figma.com" "https://embed.figma.com" }}
       {{ $src := $base }}
       {{ if and $base (hasPrefix $base "https://embed.figma.com") }}
@@ -67,6 +67,8 @@
           {{ if not (in $base "device-frame=") }}{{ $src = printf "%s&device-frame=false" $base }}{{ end }}
         {{ end }}
       {{ end }}
+      {{/* Only embed when URL is actually embed domain with path (/proto/ or /file/) — otherwise browser may load www and get X-Frame-Options */}}
+      {{ if and $src (hasPrefix $src "https://embed.figma.com") (or (in $src "/proto/") (in $src "/file/")) }}
       {{ if eq $platform "mobile" }}
       <div class="layout-block__mockup layout-block__mockup--mobile">
         <div class="layout-block__mockup-inner">
@@ -82,6 +84,7 @@
           <iframe src="{{ $src }}" allowfullscreen loading="lazy" width="100%" height="450" style="min-height: 400px;"></iframe>
         </div>
       </div>
+      {{ end }}
       {{ end }}
     {{ end }}
   </div>
