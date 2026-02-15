@@ -66,6 +66,7 @@
         {{ else }}
           {{ if not (in $base "device-frame=") }}{{ $src = printf "%s&device-frame=false" $base }}{{ end }}
         {{ end }}
+      {{ end }}
       {{ if eq $platform "mobile" }}
       <div class="layout-block__mockup layout-block__mockup--mobile">
         <div class="layout-block__mockup-inner">

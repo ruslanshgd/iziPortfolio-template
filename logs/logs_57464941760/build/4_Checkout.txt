@@ -1,0 +1,95 @@
+﻿2026-02-15T07:43:03.5575550Z ##[group]Run actions/checkout@v4
+2026-02-15T07:43:03.5575856Z with:
+2026-02-15T07:43:03.5576032Z   submodules: recursive
+2026-02-15T07:43:03.5576242Z   fetch-depth: 0
+2026-02-15T07:43:03.5576456Z   repository: ruslanshgd/ruslanshgd.github.io
+2026-02-15T07:43:03.5576897Z   token: ***
+2026-02-15T07:43:03.5577074Z   ssh-strict: true
+2026-02-15T07:43:03.5577256Z   ssh-user: git
+2026-02-15T07:43:03.5577455Z   persist-credentials: true
+2026-02-15T07:43:03.5577675Z   clean: true
+2026-02-15T07:43:03.5577868Z   sparse-checkout-cone-mode: true
+2026-02-15T07:43:03.5578112Z   fetch-tags: false
+2026-02-15T07:43:03.5578304Z   show-progress: true
+2026-02-15T07:43:03.5578507Z   lfs: false
+2026-02-15T07:43:03.5578685Z   set-safe-directory: true
+2026-02-15T07:43:03.5578882Z env:
+2026-02-15T07:43:03.5579043Z   HUGO_VERSION: 0.155.2
+2026-02-15T07:43:03.5579236Z ##[endgroup]
+2026-02-15T07:43:03.6667881Z Syncing repository: ruslanshgd/ruslanshgd.github.io
+2026-02-15T07:43:03.6669269Z ##[group]Getting Git version info
+2026-02-15T07:43:03.6669793Z Working directory is '/home/runner/work/ruslanshgd.github.io/ruslanshgd.github.io'
+2026-02-15T07:43:03.6670437Z [command]/usr/bin/git version
+2026-02-15T07:43:03.6677501Z git version 2.52.0
+2026-02-15T07:43:03.6704783Z ##[endgroup]
+2026-02-15T07:43:03.6726780Z Temporarily overriding HOME='/home/runner/work/_temp/87b119b9-57c6-4f22-9808-61f0d997c2f2' before making global git config changes
+2026-02-15T07:43:03.6727872Z Adding repository directory to the temporary git global config as a safe directory
+2026-02-15T07:43:03.6732678Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/ruslanshgd.github.io/ruslanshgd.github.io
+2026-02-15T07:43:03.6776563Z Deleting the contents of '/home/runner/work/ruslanshgd.github.io/ruslanshgd.github.io'
+2026-02-15T07:43:03.6781473Z ##[group]Initializing the repository
+2026-02-15T07:43:03.6785428Z [command]/usr/bin/git init /home/runner/work/ruslanshgd.github.io/ruslanshgd.github.io
+2026-02-15T07:43:03.6923242Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-02-15T07:43:03.6924275Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-02-15T07:43:03.6925111Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-02-15T07:43:03.6925744Z hint: call:
+2026-02-15T07:43:03.6926060Z hint:
+2026-02-15T07:43:03.6926471Z hint: 	git config --global init.defaultBranch <name>
+2026-02-15T07:43:03.6927009Z hint:
+2026-02-15T07:43:03.6927522Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-02-15T07:43:03.6928409Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-02-15T07:43:03.6929065Z hint:
+2026-02-15T07:43:03.6929399Z hint: 	git branch -m <name>
+2026-02-15T07:43:03.6929765Z hint:
+2026-02-15T07:43:03.6930299Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-02-15T07:43:03.6931759Z Initialized empty Git repository in /home/runner/work/ruslanshgd.github.io/ruslanshgd.github.io/.git/
+2026-02-15T07:43:03.6945411Z [command]/usr/bin/git remote add origin https://github.com/ruslanshgd/ruslanshgd.github.io
+2026-02-15T07:43:03.6985245Z ##[endgroup]
+2026-02-15T07:43:03.6985890Z ##[group]Disabling automatic garbage collection
+2026-02-15T07:43:03.6989820Z [command]/usr/bin/git config --local gc.auto 0
+2026-02-15T07:43:03.7021232Z ##[endgroup]
+2026-02-15T07:43:03.7021742Z ##[group]Setting up auth
+2026-02-15T07:43:03.7029430Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-02-15T07:43:03.7062007Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-02-15T07:43:03.7444513Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-02-15T07:43:03.7477054Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-02-15T07:43:03.7721982Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-02-15T07:43:03.7764842Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-02-15T07:43:03.8019523Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-02-15T07:43:03.8060670Z ##[endgroup]
+2026-02-15T07:43:03.8061391Z ##[group]Fetching the repository
+2026-02-15T07:43:03.8070608Z [command]/usr/bin/git -c protocol.version=2 fetch --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/*
+2026-02-15T07:43:04.0522259Z From https://github.com/ruslanshgd/ruslanshgd.github.io
+2026-02-15T07:43:04.0523451Z  * [new branch]      main       -> origin/main
+2026-02-15T07:43:04.0570949Z [command]/usr/bin/git branch --list --remote origin/main
+2026-02-15T07:43:04.0602303Z   origin/main
+2026-02-15T07:43:04.0615348Z [command]/usr/bin/git rev-parse refs/remotes/origin/main
+2026-02-15T07:43:04.0640981Z f8a3023c2906d9cefeda08103ca032b2f9993d06
+2026-02-15T07:43:04.0646938Z ##[endgroup]
+2026-02-15T07:43:04.0647805Z ##[group]Determining the checkout info
+2026-02-15T07:43:04.0649147Z ##[endgroup]
+2026-02-15T07:43:04.0656470Z [command]/usr/bin/git sparse-checkout disable
+2026-02-15T07:43:04.0708127Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-02-15T07:43:04.0742751Z ##[group]Checking out the ref
+2026-02-15T07:43:04.0750077Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2026-02-15T07:43:04.0879435Z Switched to a new branch 'main'
+2026-02-15T07:43:04.0882078Z branch 'main' set up to track 'origin/main'.
+2026-02-15T07:43:04.0890277Z ##[endgroup]
+2026-02-15T07:43:04.0890895Z ##[group]Setting up auth for fetching submodules
+2026-02-15T07:43:04.0898658Z [command]/usr/bin/git config --global http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-02-15T07:43:04.0943866Z [command]/usr/bin/git config --global --unset-all url.https://github.com/.insteadOf
+2026-02-15T07:43:04.0978849Z [command]/usr/bin/git config --global --add url.https://github.com/.insteadOf git@github.com:
+2026-02-15T07:43:04.1017426Z [command]/usr/bin/git config --global --add url.https://github.com/.insteadOf org-17417262@github.com:
+2026-02-15T07:43:04.1049082Z ##[endgroup]
+2026-02-15T07:43:04.1049661Z ##[group]Fetching submodules
+2026-02-15T07:43:04.1055985Z [command]/usr/bin/git submodule sync --recursive
+2026-02-15T07:43:04.1331935Z [command]/usr/bin/git -c protocol.version=2 submodule update --init --force --recursive
+2026-02-15T07:43:04.1602332Z [command]/usr/bin/git submodule foreach --recursive git config --local gc.auto 0
+2026-02-15T07:43:04.1864944Z ##[endgroup]
+2026-02-15T07:43:04.1865681Z ##[group]Persisting credentials for submodules
+2026-02-15T07:43:04.1872992Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'url\.https\:\/\/github\.com\/\.insteadOf' && git config --local --unset-all 'url.https://github.com/.insteadOf' || :"
+2026-02-15T07:43:04.2138910Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local 'http.https://github.com/.extraheader' 'AUTHORIZATION: basic ***' && git config --local --show-origin --name-only --get-regexp remote.origin.url"
+2026-02-15T07:43:04.2409354Z [command]/usr/bin/git submodule foreach --recursive git config --local --add 'url.https://github.com/.insteadOf' 'git@github.com:'
+2026-02-15T07:43:04.2681359Z [command]/usr/bin/git submodule foreach --recursive git config --local --add 'url.https://github.com/.insteadOf' 'org-17417262@github.com:'
+2026-02-15T07:43:04.2952903Z ##[endgroup]
+2026-02-15T07:43:04.2995241Z [command]/usr/bin/git log -1 --format=%H
+2026-02-15T07:43:04.3020836Z f8a3023c2906d9cefeda08103ca032b2f9993d06

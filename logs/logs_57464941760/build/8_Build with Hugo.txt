@@ -1,0 +1,18 @@
+﻿2026-02-15T07:43:05.2678703Z ##[group]Run hugo \
+2026-02-15T07:43:05.2678982Z [36;1mhugo \[0m
+2026-02-15T07:43:05.2679164Z [36;1m  --gc \[0m
+2026-02-15T07:43:05.2679349Z [36;1m  --minify \[0m
+2026-02-15T07:43:05.2679605Z [36;1m  --baseURL "https://ruslanshgd.github.io/"[0m
+2026-02-15T07:43:05.2727801Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-02-15T07:43:05.2728138Z env:
+2026-02-15T07:43:05.2728298Z   HUGO_VERSION: 0.155.2
+2026-02-15T07:43:05.2728496Z   GITHUB_PAGES: true
+2026-02-15T07:43:05.2728696Z   HUGO_ENVIRONMENT: production
+2026-02-15T07:43:05.2728927Z   HUGO_ENV: production
+2026-02-15T07:43:05.2729122Z ##[endgroup]
+2026-02-15T07:43:05.3076453Z Start building sites … 
+2026-02-15T07:43:05.3077283Z hugo v0.155.2-d8c0dfccf72ab43db2b2bca1483a61c8660021d9+extended linux/amd64 BuildDate=2026-02-02T10:04:51Z VendorInfo=gohugoio
+2026-02-15T07:43:05.3077992Z 
+2026-02-15T07:43:05.3177752Z ERROR error building site: "/home/runner/work/ruslanshgd.github.io/ruslanshgd.github.io/layouts/partials/case/layout-blocks.html:114:1": parse of template failed: template: _partials/case/layout-blocks.html:114: unexpected EOF
+2026-02-15T07:43:05.3179060Z Total in 11 ms
+2026-02-15T07:43:05.3209544Z ##[error]Process completed with exit code 1.

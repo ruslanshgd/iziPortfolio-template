@@ -1,0 +1,14 @@
+﻿2026-02-15T07:43:05.1706215Z ##[group]Run echo "📝 Syncing CSS from template repository..."
+2026-02-15T07:43:05.1706710Z [36;1mecho "📝 Syncing CSS from template repository..."[0m
+2026-02-15T07:43:05.1707231Z [36;1mBASE_URL="https://raw.githubusercontent.com/${TEMPLATE_OWNER}/${TEMPLATE_REPO}/main"[0m
+2026-02-15T07:43:05.1707921Z [36;1mcurl -sL "${BASE_URL}/static/css/main.css" -o static/css/main.css || echo "⚠️ Could not fetch CSS from template"[0m
+2026-02-15T07:43:05.1708435Z [36;1mecho "✅ CSS synced"[0m
+2026-02-15T07:43:05.1756830Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-02-15T07:43:05.1757183Z env:
+2026-02-15T07:43:05.1757364Z   HUGO_VERSION: 0.155.2
+2026-02-15T07:43:05.1757581Z   GITHUB_PAGES: true
+2026-02-15T07:43:05.1757795Z   TEMPLATE_OWNER: ruslanshgd
+2026-02-15T07:43:05.1758049Z   TEMPLATE_REPO: iziPortfolio-template
+2026-02-15T07:43:05.1758308Z ##[endgroup]
+2026-02-15T07:43:05.1825461Z 📝 Syncing CSS from template repository...
+2026-02-15T07:43:05.2649174Z ✅ CSS synced
