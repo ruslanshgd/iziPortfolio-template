@@ -85,6 +85,9 @@
         </div>
       </div>
       {{ end }}
+      {{ else }}
+      {{/* Fallback: figma_url present but embed condition not met (wrong URL shape) — show link */}}
+      <p class="layout-block__figma-fallback"><a href="{{ . }}" target="_blank" rel="noopener noreferrer">Открыть прототип в Figma</a></p>
       {{ end }}
     {{ end }}
   </div>
